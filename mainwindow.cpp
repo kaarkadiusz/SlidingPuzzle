@@ -17,5 +17,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_newGameButton_clicked()
 {
     QFrame *frame = ui->frame;
-    new Game(frame);
+    int n = ui->nSpinBox->value();
+    new Game(n, frame);
 }

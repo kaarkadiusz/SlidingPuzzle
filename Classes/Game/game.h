@@ -7,7 +7,7 @@
 class Game
 {
 public:
-    Game(QFrame *frame);
+    Game(int n, QFrame *frame);
 private:
     QFrame *Frame;
 };

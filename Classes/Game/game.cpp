@@ -1,8 +1,8 @@
 #include "game.h"
 #include "../Board/board.h"
 
-Game::Game(QFrame *frame){
+Game::Game(int n, QFrame *frame){
     this->Frame = frame;
-    Board *board = new Board(3, frame);
+    Board *board = new Board(n, frame);
     board->create(*frame);
 }
