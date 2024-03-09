@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->SlidingPuzzle = new Game(ui->frame);
 }
 
 MainWindow::~MainWindow()
@@ -16,7 +17,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newGameButton_clicked()
 {
-    QFrame *frame = ui->frame;
     int n = ui->nSpinBox->value();
-    new Game(n, frame);
+    this->SlidingPuzzle->init(n);
 }
