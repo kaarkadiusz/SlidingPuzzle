@@ -37,10 +37,22 @@ std::vector<std::tuple<int, int>> Board::getRandomPositions(){
 }
 
 void Board::onBlockClicked() {
-    Block *clickedBlock = dynamic_cast<Block*>(sender());
-    auto value = this->Blocks.at(clickedBlock);
-    if (clickedBlock) {
-        qDebug() << "Block " << clickedBlock->Val << "( " << get<0>(value) << " , "<< get<1>(value) << " ) clicked.";
-        qDebug() << get<0>(EmptyPosition) << " , "<< get<1>(EmptyPosition);
-    }
+    Block *block = dynamic_cast<Block*>(sender());
+    if(!isBlockMovable(block)) return;
+    moveBlock(block);
+}
+
+bool Board::isBlockMovable(Block *block) {
+    if(block == nullptr) return false;
+    std::tuple<int, int> position = this->Blocks.at(block);
+    if((get<0>(position) == get<0>(this->EmptyPosition) && std::abs(get<1>(position) - get<1>(EmptyPosition)) == 1) ||
+       (get<1>(position) == get<1>(this->EmptyPosition) && std::abs(get<0>(position) - get<0>(EmptyPosition)) == 1))
+        return true;
+    return false;
+}
+
+void Board::moveBlock(Block *block) {
+    this->removeWidget(block);
+    this->addWidget(block, get<0>(EmptyPosition), get<1>(EmptyPosition));
+    std::swap(this->Blocks.at(block), EmptyPosition);
 }

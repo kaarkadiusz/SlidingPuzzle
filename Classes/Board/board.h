@@ -18,6 +18,8 @@ private:
     std::vector<std::tuple<int, int>> getRandomPositions();
 
     void onBlockClicked();
+    bool isBlockMovable(Block *block);
+    void moveBlock(Block *block);
 };
 
 #endif // BOARD_H
