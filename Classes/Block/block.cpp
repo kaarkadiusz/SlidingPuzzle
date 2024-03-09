@@ -8,7 +8,7 @@ Block::Block(int val, QWidget* parent) : QFrame(parent) {
     this->setLineWidth(1);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QLabel* label = new QLabel((new QString("%1"))->arg(this->Val));
+    QLabel* label = new QLabel((new QString("%1"))->arg(this->Val + 1));
     label->setAlignment(Qt::AlignCenter);
     QHBoxLayout* layout = new QHBoxLayout();
     layout->addWidget(label);

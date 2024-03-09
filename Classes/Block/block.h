@@ -2,13 +2,11 @@
 #define BLOCK_H
 
 #include <QFrame>
-#include <tuple>
 
 class Block : public QFrame {
     Q_OBJECT
 public:
     int Val;
-    std::tuple<int, int> Position;
     Block(int val, QWidget* parent = nullptr);
 
 signals:

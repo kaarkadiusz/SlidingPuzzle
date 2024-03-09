@@ -4,6 +4,5 @@
 Game::Game(QFrame *frame){
     this->Frame = frame;
     Board *board = new Board(3, frame);
-    board->populate();
-    board->show(*frame);
+    board->create(*frame);
 }

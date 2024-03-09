@@ -9,16 +9,15 @@ class Board : public QGridLayout {
 
 public:
     Board(int n, QWidget* parent = nullptr);
-    void populate();
-    void show(QFrame &frame);
+    void create(QFrame &frame);
 
 private:
     int N;
-    std::vector<std::tuple<int, int>> Positions;
-    std::vector<Block> Blocks;
+    std::tuple<int, int> EmptyPosition;
+    std::map<Block*, std::tuple<int, int>> Blocks;
+    std::vector<std::tuple<int, int>> getRandomPositions();
+
     void onBlockClicked();
 };
-
-
 
 #endif // BOARD_H
