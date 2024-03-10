@@ -1,16 +1,15 @@
 #include "game.h"
-#include "../Board/board.h"
-#include "../PromptDialog/promptdialog.h"
 
 Game::Game(QFrame *frame){
     this->Frame = frame;
+    this->Board = nullptr;
 }
 
 void Game::init(int n) {
     auto existingLayout = this->Frame->layout();
     if(existingLayout)
     {
-        PromptDialog *dialog = new PromptDialog(this->Frame);
+        YesNoDialog *dialog = new YesNoDialog(this->Frame);
         if(dialog->exec() == 1)
         {
             QLayoutItem* item;
@@ -24,6 +23,12 @@ void Game::init(int n) {
         }
         else return;
     }
-    Board *board = new Board(n, this->Frame);
-    board->create(*this->Frame);
+    this->Board = new class Board(n, this->Frame);
+    connect(this->Board, &Board::solved, this, &Game::onBoardSolved);
+    this->Board->create(*this->Frame);
+}
+
+void Game::onBoardSolved() {
+    PromptDialog *dialog = new PromptDialog(this->Frame);
+    dialog->exec();
 }

@@ -7,8 +7,7 @@ PromptDialog::PromptDialog(QWidget *parent)
     , ui(new Ui::PromptDialog)
 {
     ui->setupUi(this);
-    ui->buttonBox->button(QDialogButtonBox::Yes)->setText("Tak");
-    ui->buttonBox->button(QDialogButtonBox::No)->setText("Nie");
+    ui->buttonBox->button(QDialogButtonBox::Close)->setText("Zamknij");
 }
 
 PromptDialog::~PromptDialog()

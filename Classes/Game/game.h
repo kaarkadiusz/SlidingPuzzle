@@ -2,15 +2,20 @@
 #define GAME_H
 
 #include <QFrame>
+#include "../Board/board.h"
+#include "../YesNoDialog/yesnodialog.h"
+#include "../PromptDialog/promptdialog.h"
 
-
-class Game
-{
+class Game : public QObject{
+    Q_OBJECT
 public:
     Game(QFrame *frame);
     void init(int n);
 private:
     QFrame *Frame;
+    Board *Board;
+
+    void onBoardSolved();
 };
 
 #endif // GAME_H

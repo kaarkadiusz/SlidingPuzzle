@@ -27,6 +27,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Classes/Board/board.h Classes/Board/board.cpp
         Classes/Block/block.h Classes/Block/block.cpp
         Classes/PromptDialog/promptdialog.h Classes/PromptDialog/promptdialog.cpp Classes/PromptDialog/promptdialog.ui
+        Classes/YesNoDialog/yesnodialog.h Classes/YesNoDialog/yesnodialog.cpp Classes/YesNoDialog/yesnodialog.ui
+
 
     )
 # Define target properties for Android with Qt 6 as:
