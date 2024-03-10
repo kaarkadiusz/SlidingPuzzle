@@ -9,31 +9,71 @@ Board::Board(int n, QWidget* parent) : QGridLayout(parent) {
 
 void Board::create(QFrame &frame) {
     this->Blocks.clear();
-    std::vector<std::tuple<int, int>> positions = this->getRandomPositions();
+    std::vector<int> board = this->generateBoard();
+    int emptyElement = this->N * this->N - 1;
 
-    for(int i = 0; i < positions.size() - 1; i++)
+    for(int i = 0; i < board.size(); i++)
     {
-        Block *block = new Block(i, nullptr);
+        if(board[i] == emptyElement)
+        {
+            this->EmptyPosition = std::tuple(i / this->N, i % this->N);
+            continue;
+        }
+        Block *block = new Block(board[i], nullptr);
         connect(block, &Block::clicked, this, &Board::onBlockClicked);
-        this->Blocks[block] = positions[i];
-        this->addWidget(block, get<0>(positions[i]), get<1>(positions[i]));
-    }
+        this->Blocks[block] = std::tuple(i / this->N, i % this->N);
+        this->addWidget(block, i / this->N, i % this->N);
 
-    this->EmptyPosition = positions[positions.size() - 1];
+    }
 
     frame.setLayout(this);
 }
 
-std::vector<std::tuple<int, int>> Board::getRandomPositions(){
-    std::vector<std::tuple<int, int>> positions;
-    for(int i = 0; i < this->N*this->N ; i++) {
-        positions.push_back(std::tuple(i / this->N, i % this->N));
+std::vector<int> Board::generateBoard() {
+    std::vector<int> randomArray;
+    while(true)
+    {
+        randomArray = this->getRandomArray();
+        if(this->isArraySolvable(randomArray)) break;
+    }
+    return randomArray;
+}
+
+bool Board::isArraySolvable(std::vector<int> array) {
+    int inversionCount = this->getArrayInversionCount(array);
+    if(this->N % 2 == 0)
+    {
+        int row = std::distance(array.begin(), std::find(array.begin(), array.end(), this->N * this->N - 1)) / this->N;
+        return (inversionCount % 2 == 0 && row % 2 != 0) || (inversionCount % 2 != 0 && row % 2 == 0);
+    }
+    else return inversionCount % 2 == 0;
+}
+
+int Board::getArrayInversionCount(std::vector<int> array) {
+    int inversionCount = 0;
+    int emptyElement = this->N * this->N - 1;
+    for(int i = 0; i < array.size(); i++)
+    {
+        int element = array[i];
+        if(element == emptyElement) continue;
+        for(int j = i; j < array.size(); j++)
+        {
+            if (element > array[j] && array[j] != emptyElement) inversionCount++;
+        }
+    }
+    return inversionCount;
+}
+
+std::vector<int> Board::getRandomArray() {
+    std::vector<int> randomArray;
+    for(int i = 0; i < this->N * this->N; i++)
+    {
+        randomArray.push_back(i);
     }
     std::random_device rd;
     std::mt19937 g(rd());
-    shuffle(positions.begin(), positions.end(), g);
-
-    return positions;
+    shuffle(randomArray.begin(), randomArray.end(), g);
+    return randomArray;
 }
 
 void Board::onBlockClicked() {

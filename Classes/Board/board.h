@@ -15,11 +15,15 @@ private:
     int N;
     std::tuple<int, int> EmptyPosition;
     std::map<Block*, std::tuple<int, int>> Blocks;
-    std::vector<std::tuple<int, int>> getRandomPositions();
 
-    void onBlockClicked();
+    std::vector<int> getRandomArray();
+    std::vector<int> generateBoard();
+    int getArrayInversionCount(std::vector<int> array);
+    bool isArraySolvable(std::vector<int> array);
     bool isBlockMovable(Block *block);
+    void onBlockClicked();
     void moveBlock(Block *block);
+
 };
 
 #endif // BOARD_H
