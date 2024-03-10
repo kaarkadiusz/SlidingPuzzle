@@ -9,19 +9,19 @@ void Game::init(int n) {
     auto existingLayout = this->Frame->layout();
     if(existingLayout)
     {
-        YesNoDialog *dialog = new YesNoDialog(this->Frame);
-        if(dialog->exec() == 1)
+        if(this->Board->IsSolved)
         {
-            QLayoutItem* item;
-            QWidget* widget;
-            while ((item = existingLayout->takeAt(0))) {
-                if ((widget = item->widget()) != nullptr) {
-                    delete widget;
-                }
-            }
-            delete existingLayout;
+            this->clearLayout(existingLayout);
         }
-        else return;
+        else
+        {
+            YesNoDialog *dialog = new YesNoDialog(this->Frame);
+            if(dialog->exec() == 1)
+            {
+                this->clearLayout(existingLayout);
+            }
+            else return;
+        }
     }
     this->Board = new class Board(n, this->Frame);
     connect(this->Board, &Board::solved, this, &Game::onBoardSolved);
@@ -31,4 +31,15 @@ void Game::init(int n) {
 void Game::onBoardSolved() {
     PromptDialog *dialog = new PromptDialog(this->Frame);
     dialog->exec();
+}
+
+void Game::clearLayout(QLayout *layout) {
+    QLayoutItem* item;
+    QWidget* widget;
+    while ((item = layout->takeAt(0))) {
+        if ((widget = item->widget()) != nullptr) {
+            delete widget;
+        }
+    }
+    delete layout;
 }

@@ -3,6 +3,7 @@
 
 #include "../Block/block.h"
 #include <QGridLayout>
+#include <random>
 
 #define MAX_BOARD_CORRECTNESS 0.5
 
@@ -12,6 +13,7 @@ class Board : public QGridLayout {
 public:
     Board(int n, QWidget* parent = nullptr);
     void create(QFrame &frame);
+    bool IsSolved;
 
 signals:
     void solved();
@@ -19,14 +21,14 @@ signals:
 private:
     int N;
     std::tuple<int, int> EmptyPosition;
-    std::map<Block*, std::tuple<int, int>> Blocks;
+    std::vector<Block*> Blocks;
     int CorrectlyPlacedBlocks;
 
     std::vector<int> getRandomArray();
     std::vector<int> generateBoard();
     int getArrayInversionCount(std::vector<int> array);
-    double getBoardCorrectness(std::vector<int> array);
-    double getBoardCorrectness();
+    double getArrayCorrectness(std::vector<int> array);
+    bool isBoardSolved();
     bool isBoardSolvable(std::vector<int> array);
     bool isBlockMovable(Block *block);
     void onBlockClicked();

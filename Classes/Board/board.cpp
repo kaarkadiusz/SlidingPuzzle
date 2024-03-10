@@ -1,8 +1,9 @@
 #include "board.h"
-#include <random>
 
 Board::Board(int n, QWidget* parent) : QGridLayout(parent) {
     this->N = n;
+    this->IsSolved = false;
+
     this->setVerticalSpacing(5);
     this->setHorizontalSpacing(5);
 }
@@ -15,17 +16,27 @@ void Board::create(QFrame &frame) {
 
     for(int i = 0; i < board.size(); i++)
     {
+        std::tuple<int, int> thisIterationPosition = std::tuple(i / this->N, i % this->N);
         if(board[i] == emptyElement)
         {
-            this->EmptyPosition = std::tuple(i / this->N, i % this->N);
+            this->EmptyPosition = thisIterationPosition;
             continue;
         }
-        Block *block = new Block(board[i], nullptr);
+        Block *block = new Block(board[i], thisIterationPosition, this->N, nullptr);
         connect(block, &Block::clicked, this, &Board::onBlockClicked);
-        this->Blocks[block] = std::tuple(i / this->N, i % this->N);
+
+        this->Blocks.push_back(block);
         this->addWidget(block, i / this->N, i % this->N);
     }
     frame.setLayout(this);
+}
+
+bool Board::isBoardSolved() {
+    for(Block *block : this->Blocks)
+    {
+        if(!(block->isPlacedCorrectly)) return false;
+    }
+    return true;
 }
 
 std::vector<int> Board::generateBoard() {
@@ -33,21 +44,12 @@ std::vector<int> Board::generateBoard() {
     while(true)
     {
         randomArray = this->getRandomArray();
-        if(this->isBoardSolvable(randomArray) && this->getBoardCorrectness(randomArray) <= MAX_BOARD_CORRECTNESS) break;
+        if(this->isBoardSolvable(randomArray) && this->getArrayCorrectness(randomArray) <= MAX_BOARD_CORRECTNESS) break;
     }
     return randomArray;
 }
 
-double Board::getBoardCorrectness() {
-    int correctlyPlaced = 0;
-    for(auto pair : this->Blocks)
-    {
-        if(pair.first->Val == get<0>(pair.second) * this->N + get<1>(pair.second)) correctlyPlaced++;
-    }
-    return ((double)correctlyPlaced) / ((double)(this->Blocks.size()));
-}
-
-double Board::getBoardCorrectness(std::vector<int> array) {
+double Board::getArrayCorrectness(std::vector<int> array) {
     int emptyElement = this->N * this->N - 1;
     int correctlyPlaced = 0;
     for(int i = 0; i < array.size(); i++)
@@ -97,13 +99,13 @@ std::vector<int> Board::getRandomArray() {
 
 void Board::onBlockClicked() {
     Block *block = dynamic_cast<Block*>(sender());
-    if(!isBlockMovable(block)) return;
+    if(!isBlockMovable(block) || this->IsSolved) return;
     moveBlock(block);
 }
 
 bool Board::isBlockMovable(Block *block) {
     if(block == nullptr) return false;
-    std::tuple<int, int> position = this->Blocks.at(block);
+    std::tuple<int, int> position = block->getPosition();
     if((get<0>(position) == get<0>(this->EmptyPosition) && std::abs(get<1>(position) - get<1>(EmptyPosition)) == 1) ||
        (get<1>(position) == get<1>(this->EmptyPosition) && std::abs(get<0>(position) - get<0>(EmptyPosition)) == 1))
         return true;
@@ -113,6 +115,12 @@ bool Board::isBlockMovable(Block *block) {
 void Board::moveBlock(Block *block) {
     this->removeWidget(block);
     this->addWidget(block, get<0>(EmptyPosition), get<1>(EmptyPosition));
-    std::swap(this->Blocks.at(block), EmptyPosition);
-    if(this->getBoardCorrectness() == 1) emit this->solved();
+    std::tuple<int, int> tmpPosition = block->getPosition();
+    block->setPosition(EmptyPosition);
+    EmptyPosition = tmpPosition;
+    if(this->isBoardSolved())
+    {
+        this->IsSolved = true;
+        emit this->solved();
+    }
 }

@@ -16,6 +16,7 @@ private:
     Board *Board;
 
     void onBoardSolved();
+    void clearLayout(QLayout *layout);
 };
 
 #endif // GAME_H
