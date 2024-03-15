@@ -1,4 +1,5 @@
 #include "qboard.h"
+#include "../BoardGenerator/boardgenerator.h"
 
 QBoard::QBoard(int n, QWidget* parent) : Board(n), QGridLayout(parent) {
     this->setVerticalSpacing(5);
@@ -7,7 +8,7 @@ QBoard::QBoard(int n, QWidget* parent) : Board(n), QGridLayout(parent) {
 
 void QBoard::create(QFrame &frame) {
     this->Blocks.clear();
-    std::vector<int> board = this->generateBoard();
+    std::vector<int> board = BoardGenerator::generateBoard(this->N);
     int emptyElement = this->N * this->N - 1;
 
     for(int i = 0; i < board.size(); i++)

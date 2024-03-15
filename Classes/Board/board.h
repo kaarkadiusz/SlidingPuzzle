@@ -19,17 +19,9 @@ protected:
     std::vector<QBlock*> Blocks;
     std::tuple<int, int> EmptyPosition;
 
-    std::vector<int> generateBoard();
     bool isBlockMovable(QBlock *block);
     void moveBlock(QBlock *block);
     bool isBoardSolved();
-
-private:
-    std::vector<int> getRandomArray();
-    int getArrayInversionCount(std::vector<int> array);
-    double getArrayCorrectness(std::vector<int> array);
-    bool isBoardSolvable(std::vector<int> array);
-
 };
 
 #endif // BOARD_H

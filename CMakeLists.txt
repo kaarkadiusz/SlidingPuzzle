@@ -31,6 +31,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Classes/QBlock/qblock.h Classes/QBlock/qblock.cpp
         Classes/QBoard/qboard.h Classes/QBoard/qboard.cpp
         Classes/QGame/qgame.h Classes/QGame/qgame.cpp
+        Classes/BoardGenerator/boardgenerator.h Classes/BoardGenerator/boardgenerator.cpp
+
+
+
+
+
 
 
     )
