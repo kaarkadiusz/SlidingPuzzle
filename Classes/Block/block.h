@@ -7,6 +7,7 @@ class Block {
 public:
     Block(int val, std::tuple<int, int> position);
 
+    int getVal();
     std::tuple<int, int> getPosition();
     void setPosition(std::tuple<int, int> newPosition);
     bool isPlacedCorrectly(int n);

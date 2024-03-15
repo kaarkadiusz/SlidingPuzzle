@@ -1,6 +1,10 @@
 #include "qblock.h"
 
 QBlock::QBlock(int val, std::tuple<int, int> position, QWidget* parent) : Block(val, position), QFrame(parent){
+    this->setUi();
+}
+
+void QBlock::setUi() {
     this->setFrameShape(QFrame::Box);
     this->setLineWidth(1);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

@@ -15,3 +15,7 @@ void Block::setPosition(std::tuple<int, int> newPosition) {
 bool Block::isPlacedCorrectly(int n){
     return std::get<0>(this->Position) * n + std::get<1>(this->Position) == this->Val;
 }
+
+int Block::getVal() {
+    return this->Val;
+}

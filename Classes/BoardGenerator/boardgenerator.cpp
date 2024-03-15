@@ -2,14 +2,14 @@
 #include <random>
 #include <algorithm>
 
-std::vector<int> BoardGenerator::generateBoard(int n) {
+std::vector<Block*> BoardGenerator::generateBoard(int n) {
     std::vector<int> randomArray;
     while(true)
     {
         randomArray = getRandomArray(n);
         if(isSolvable(randomArray) && getCorrectness(randomArray) <= MAX_BOARD_CORRECTNESS) break;
     }
-    return randomArray;
+    return convertIntsToBlocks(randomArray);
 }
 
 std::vector<int> BoardGenerator::getRandomArray(int n) {
@@ -61,4 +61,17 @@ bool BoardGenerator::isSolvable(std::vector<int> array) {
         return (inversionCount % 2 == 0 && row % 2 != 0) || (inversionCount % 2 != 0 && row % 2 == 0);
     }
     else return inversionCount % 2 == 0;
+}
+
+std::vector<Block*> BoardGenerator::convertIntsToBlocks(std::vector<int> array){
+    int n = std::sqrt(array.size());
+    std::vector<Block*> result;
+    for(int i = 0; i < array.size(); i++)
+    {
+        std::tuple<int, int> thisIterationPosition = std::tuple(i / n, i % n);
+        Block* block = new Block(array[i], thisIterationPosition);
+
+        result.push_back(block);
+    }
+    return result;
 }

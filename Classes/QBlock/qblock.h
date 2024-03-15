@@ -19,6 +19,8 @@ signals:
 protected:
     void mousePressEvent(QMouseEvent* event) override;
 
+private:
+    void setUi();
 };
 
 #endif // QBLOCK_H

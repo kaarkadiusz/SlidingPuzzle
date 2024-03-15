@@ -8,22 +8,23 @@ QBoard::QBoard(int n, QWidget* parent) : Board(n), QGridLayout(parent) {
 
 void QBoard::create(QFrame &frame) {
     this->Blocks.clear();
-    std::vector<int> board = BoardGenerator::generateBoard(this->N);
+    std::vector<Block*> board = BoardGenerator::generateBoard(this->N);
     int emptyElement = this->N * this->N - 1;
 
-    for(int i = 0; i < board.size(); i++)
+    for(Block* block : board)
     {
-        std::tuple<int, int> thisIterationPosition = std::tuple(i / this->N, i % this->N);
-        if(board[i] == emptyElement)
+        std::tuple<int, int> position = block->getPosition();
+        int val = block->getVal();
+        if(val == emptyElement)
         {
-            this->EmptyPosition = thisIterationPosition;
+            this->EmptyPosition = position;
             continue;
         }
-        QBlock *block = new QBlock(board[i], thisIterationPosition, nullptr);
-        connect(block, &QBlock::clicked, this, &QBoard::onBlockClicked);
-
-        this->Blocks.push_back(block);
-        this->addWidget(block, i / this->N, i % this->N);
+        QBlock* qblock = new QBlock(val, position, nullptr);
+        connect(qblock, &QBlock::clicked, this, &QBoard::onBlockClicked);
+        this->Blocks.push_back(qblock);
+        this->addWidget(qblock, get<0>(position), get<1>(position));
+        delete block;
     }
     frame.setLayout(this);
 }
