@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "Classes/Game/game.h"
+#include "Classes/QGame/qgame.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -22,7 +22,7 @@ private slots:
     void on_newGameButton_clicked();
 
 private:
-    Game *SlidingPuzzle;
+    QGame *SlidingPuzzle;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

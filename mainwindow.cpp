@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->SlidingPuzzle = new Game(ui->frame);
+    this->SlidingPuzzle = new QGame(ui->frame);
 }
 
 MainWindow::~MainWindow()

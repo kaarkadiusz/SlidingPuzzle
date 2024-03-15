@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Classes/YesNoDialog/yesnodialog.h Classes/YesNoDialog/yesnodialog.cpp Classes/YesNoDialog/yesnodialog.ui
         Classes/QBlock/qblock.h Classes/QBlock/qblock.cpp
         Classes/QBoard/qboard.h Classes/QBoard/qboard.cpp
+        Classes/QGame/qgame.h Classes/QGame/qgame.cpp
 
 
     )

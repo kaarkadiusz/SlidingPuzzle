@@ -10,6 +10,7 @@ class QBoard : public QGridLayout, public Board{
 
 public:
     QBoard(int n, QWidget* parent = nullptr);
+
     void create(QFrame &frame);
 
 signals:
@@ -17,7 +18,6 @@ signals:
 
 private:
     void onBlockClicked();
-
 
 };
 
