@@ -23,8 +23,8 @@ void Game::init(int n) {
             else return;
         }
     }
-    this->Board = new class Board(n, this->Frame);
-    connect(this->Board, &Board::solved, this, &Game::onBoardSolved);
+    this->Board = new QBoard(n, this->Frame);
+    connect(this->Board, &QBoard::solved, this, &Game::onBoardSolved);
     this->Board->create(*this->Frame);
 }
 

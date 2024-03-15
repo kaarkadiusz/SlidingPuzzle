@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include <QFrame>
-#include "../Board/board.h"
+#include "../QBoard/qboard.h"
 #include "../YesNoDialog/yesnodialog.h"
 #include "../PromptDialog/promptdialog.h"
 
@@ -13,7 +13,7 @@ public:
     void init(int n);
 private:
     QFrame *Frame;
-    Board *Board;
+    QBoard *Board;
 
     void onBoardSolved();
     void clearLayout(QLayout *layout);

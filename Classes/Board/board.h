@@ -1,38 +1,34 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "../Block/block.h"
+#include "../QBlock/qblock.h"
+#include "qframe.h"
 #include <QGridLayout>
 #include <random>
 
 #define MAX_BOARD_CORRECTNESS 0.5
 
-class Board : public QGridLayout {
-    Q_OBJECT
+class Board {
 
 public:
-    Board(int n, QWidget* parent = nullptr);
-    void create(QFrame &frame);
+    Board(int n);
     bool IsSolved;
 
-signals:
-    void solved();
+protected:
+    int N;
+    std::vector<QBlock*> Blocks;
+    std::tuple<int, int> EmptyPosition;
+
+    std::vector<int> generateBoard();
+    bool isBlockMovable(QBlock *block);
+    void moveBlock(QBlock *block);
+    bool isBoardSolved();
 
 private:
-    int N;
-    std::tuple<int, int> EmptyPosition;
-    std::vector<Block*> Blocks;
-    int CorrectlyPlacedBlocks;
-
     std::vector<int> getRandomArray();
-    std::vector<int> generateBoard();
     int getArrayInversionCount(std::vector<int> array);
     double getArrayCorrectness(std::vector<int> array);
-    bool isBoardSolved();
     bool isBoardSolvable(std::vector<int> array);
-    bool isBlockMovable(Block *block);
-    void onBlockClicked();
-    void moveBlock(Block *block);
 
 };
 

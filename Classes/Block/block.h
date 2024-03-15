@@ -1,30 +1,19 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <QFrame>
-#include "qboxlayout.h"
-#include "qlabel.h"
+#include <tuple>
 
-class Block : public QFrame {
-    Q_OBJECT
+class Block {
 public:
-    Block(int val, std::tuple<int, int> position, int N, QWidget* parent = nullptr);
-    bool isPlacedCorrectly;
+    Block(int val, std::tuple<int, int> position);
 
     std::tuple<int, int> getPosition();
     void setPosition(std::tuple<int, int> newPosition);
-
-private:
-    int Val;
-    std::tuple<int, int> Position;
-    int N;
-
-signals:
-    void clicked();
+    bool isPlacedCorrectly(int n);
 
 protected:
-    void mousePressEvent(QMouseEvent* event) override;
-
+    int Val;
+    std::tuple<int, int> Position;
 };
 
 

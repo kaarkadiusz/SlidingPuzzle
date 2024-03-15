@@ -28,6 +28,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Classes/Block/block.h Classes/Block/block.cpp
         Classes/PromptDialog/promptdialog.h Classes/PromptDialog/promptdialog.cpp Classes/PromptDialog/promptdialog.ui
         Classes/YesNoDialog/yesnodialog.h Classes/YesNoDialog/yesnodialog.cpp Classes/YesNoDialog/yesnodialog.ui
+        Classes/QBlock/qblock.h Classes/QBlock/qblock.cpp
+        Classes/QBoard/qboard.h Classes/QBoard/qboard.cpp
 
 
     )
