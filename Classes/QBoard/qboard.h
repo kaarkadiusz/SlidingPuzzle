@@ -4,6 +4,8 @@
 #include <QFrame>
 #include <QGridLayout>
 #include "../BoardBase/boardbase.h"
+#include "../AStar/astar.h"
+#include "../Helpers/helpers.h"
 
 class QBoard : public QGridLayout, public BoardBase{
     Q_OBJECT
@@ -15,6 +17,7 @@ public:
     bool tryMoveBlock(MoveDirection direction) override;
     void create() override;
     void show(QFrame &frame);
+    std::vector<MoveDirection> algorithmSolve();
 
 signals:
     void solved();

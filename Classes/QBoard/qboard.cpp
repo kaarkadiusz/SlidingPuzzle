@@ -81,3 +81,7 @@ bool QBoard::tryMoveBlock(MoveDirection direction){
     }
     else return false;
 }
+
+std::vector<MoveDirection> QBoard::algorithmSolve() {
+    return  AStar::solve(this->Blocks);
+}

@@ -21,6 +21,11 @@ void MainWindow::on_newGameButton_clicked()
     this->SlidingPuzzle->init(n);
 }
 
+void MainWindow::on_solveButton_clicked()
+{
+    this->SlidingPuzzle->algorithmSolve();
+}
+
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Left) {

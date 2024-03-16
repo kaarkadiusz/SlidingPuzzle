@@ -16,6 +16,7 @@ public:
 
     void init(int n);
     void tryMove(MoveDirection direction);
+    void algorithmSolve();
 
 private:
     QFrame *Frame;

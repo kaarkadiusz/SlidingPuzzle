@@ -34,6 +34,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Classes/BoardGenerator/boardgenerator.h Classes/BoardGenerator/boardgenerator.cpp
         Classes/BoardBase/boardbase.h Classes/BoardBase/boardbase.cpp
         enums.h
+        Classes/AStar/astar.h Classes/AStar/astar.cpp
+        Classes/Helpers/helpers.h Classes/Helpers/helpers.cpp
 
 
 

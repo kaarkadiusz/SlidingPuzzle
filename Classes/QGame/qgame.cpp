@@ -47,8 +47,18 @@ void QGame::clearLayout(QLayout *layout) {
 }
 
 void QGame::tryMove(MoveDirection direction) {
-    if(this->isInitialized && !this->Board->IsSolved)
-    {
-        this->Board->tryMoveBlock(direction);
+    if(!this->isInitialized || this->Board->IsSolved) return;
+
+    this->Board->tryMoveBlock(direction);
+}
+
+void QGame::algorithmSolve() {
+    if(!this->isInitialized || this->Board->IsSolved) return;
+
+    std::vector<MoveDirection> moves = this->Board->algorithmSolve();
+
+    for(auto move : moves) {
+        this->tryMove(move);
+        Helpers::delay(300);
     }
 }
