@@ -1,21 +1,21 @@
 #include "qboard.h"
-#include "../BoardGenerator/boardgenerator.h"
 
-QBoard::QBoard(int n, QWidget* parent) : Board(n), QGridLayout(parent) {
+QBoard::QBoard(int n, QWidget* parent) : QGridLayout(parent) {
+    this->N = n;
+    this->IsSolved = false;
     this->setVerticalSpacing(5);
     this->setHorizontalSpacing(5);
 }
 
-void QBoard::create(QFrame &frame) {
+void QBoard::create() {
     this->Blocks.clear();
-    std::vector<Block*> board = BoardGenerator::generateBoard(this->N);
-    int emptyElement = this->N * this->N - 1;
+    std::vector<int> board = BoardGenerator::generateBoard(this->N);
 
-    for(Block* block : board)
+    for(int i = 0; i < board.size(); i++)
     {
-        std::tuple<int, int> position = block->getPosition();
-        int val = block->getVal();
-        if(val == emptyElement)
+        std::tuple<int, int> position = std::tuple<int, int>(i / this->N, i % this->N);
+        int val = board[i];
+        if(val == 0)
         {
             this->EmptyPosition = position;
             continue;
@@ -24,21 +24,49 @@ void QBoard::create(QFrame &frame) {
         connect(qblock, &QBlock::clicked, this, &QBoard::onBlockClicked);
         this->Blocks.push_back(qblock);
         this->addWidget(qblock, get<0>(position), get<1>(position));
-        delete block;
     }
+}
+
+void QBoard::show(QFrame &frame) {
     frame.setLayout(this);
 }
 
 void QBoard::onBlockClicked() {
     QBlock *block = dynamic_cast<QBlock*>(sender());
-    if(!isBlockMovable(block) || this->IsSolved) return;
-
-    this->removeWidget(block);
-    this->addWidget(block, get<0>(EmptyPosition), get<1>(EmptyPosition));
-    this->moveBlock(block);
-    if(this->isBoardSolved())
+    if(this->IsSolved) return;
+    if(this->tryMoveBlock(block))
     {
-        this->IsSolved = true;
-        emit this->solved();
+        this->removeWidget(block);
+        this->addWidget(block, get<0>(block->getPosition()), get<1>(block->getPosition()));
+        if(this->isBoardSolved())
+        {
+            this->IsSolved = true;
+            emit this->solved();
+        }
     }
+}
+
+bool QBoard::isBoardSolved() {
+    for(QBlock *block : this->Blocks)
+    {
+        if(!(block->isPlacedCorrectly(this->N))) return false;
+    }
+    return true;
+}
+
+bool QBoard::tryMoveBlock(QBlock* block){
+    if(this->isBlockMovable(block)){
+        this->moveBlock(block);
+        return true;
+    }
+    else return false;
+}
+
+bool QBoard::tryMoveBlock(MoveDirection direction){
+    if(!this->isBlockMovable(direction)) return false;
+
+    QBlock* block = findQBlockByPosition(this->Blocks, this->EmptyPosition);
+    if(block == nullptr) return false;
+
+    return tryMoveBlock(block);
 }

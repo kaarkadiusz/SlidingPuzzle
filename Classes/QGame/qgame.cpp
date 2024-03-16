@@ -2,6 +2,7 @@
 
 QGame::QGame(QFrame* frame, QObject* parent) : QObject(parent) {
     this->Frame = frame;
+
 }
 
 void QGame::init(int n) {
@@ -24,7 +25,8 @@ void QGame::init(int n) {
     }
     this->Board = new QBoard(n, this->Frame);
     connect(this->Board, &QBoard::solved, this, &QGame::onBoardSolved);
-    this->Board->create(*this->Frame);
+    this->Board->create();
+    this->Board->show(*this->Frame);
 }
 
 void QGame::onBoardSolved() {

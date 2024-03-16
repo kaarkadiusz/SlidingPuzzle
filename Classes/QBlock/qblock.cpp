@@ -10,7 +10,7 @@ void QBlock::setUi() {
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->setStyleSheet("background-color: #1a1a1a; color: #fafafa;");
 
-    QLabel* label = new QLabel((new QString("%1"))->arg(this->Val + 1));
+    QLabel* label = new QLabel((new QString("%1"))->arg(this->Val));
     label->setAlignment(Qt::AlignCenter);
     QFont *font = new QFont("Segoe UI", 18);
     label->setFont(*font);

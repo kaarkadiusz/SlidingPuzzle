@@ -5,25 +5,36 @@ Board::Board(int n) {
     this->IsSolved = false;
 }
 
+void Board::create() {
+    this->Blocks.clear();
+    std::vector<int> board = BoardGenerator::generateBoard(this->N);
+
+    for(int i = 0; i < board.size(); i++)
+    {
+        std::tuple<int, int> position = std::tuple<int, int>(i / this->N, i % this->N);
+        int val = board[i];
+        if(val == 0)
+        {
+            this->EmptyPosition = position;
+            continue;
+        }
+        Block* block = new Block(val, position);
+        this->Blocks.push_back(block);
+    }
+}
+
+void Board::show() {
+    // wypisanie do konsoli
+}
+
+void Board::tryMoveBlock(Block* block){
+    if(this->isBlockMovable(block)) this->moveBlock(block);
+}
+
 bool Board::isBoardSolved() {
-    for(QBlock *block : this->Blocks)
+    for(Block *block : this->Blocks)
     {
         if(!(block->isPlacedCorrectly(this->N))) return false;
     }
     return true;
-}
-
-bool Board::isBlockMovable(QBlock *block) {
-    if(block == nullptr) return false;
-    std::tuple<int, int> position = block->getPosition();
-    if((get<0>(position) == get<0>(this->EmptyPosition) && std::abs(get<1>(position) - get<1>(EmptyPosition)) == 1) ||
-       (get<1>(position) == get<1>(this->EmptyPosition) && std::abs(get<0>(position) - get<0>(EmptyPosition)) == 1))
-        return true;
-    return false;
-}
-
-void Board::moveBlock(QBlock *block) {
-    std::tuple<int, int> tmpPosition = block->getPosition();
-    block->setPosition(EmptyPosition);
-    EmptyPosition = tmpPosition;
 }

@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "../BoardBase/boardbase.h"
 #include "../QBlock/qblock.h"
 #include "qframe.h"
 #include <QGridLayout>
@@ -8,20 +9,18 @@
 
 #define MAX_BOARD_CORRECTNESS 0.5
 
-class Board {
+class Board : public BoardBase{
 
 public:
     Board(int n);
-    bool IsSolved;
 
-protected:
-    int N;
-    std::vector<QBlock*> Blocks;
-    std::tuple<int, int> EmptyPosition;
+    void tryMoveBlock(Block* block);
+    void create() override;
+    void show();
 
-    bool isBlockMovable(QBlock *block);
-    void moveBlock(QBlock *block);
-    bool isBoardSolved();
+private:
+    std::vector<Block*> Blocks;
+    bool isBoardSolved() override;
 };
 
 #endif // BOARD_H
