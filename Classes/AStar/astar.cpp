@@ -95,7 +95,7 @@ std::vector<MoveDirection> AStar::solvePuzzle(const std::vector<std::vector<int>
     return std::vector<MoveDirection>();
 }
 
-std::vector<MoveDirection> AStar::solve(std::vector<QBlock*> blocks) {
+std::vector<MoveDirection> AStar::solve(std::vector<Block*> blocks) {
     int n = std::sqrt(blocks.size() + 1);
     std::vector<std::vector<int>> converted;
     for(int r = 0; r < n; r ++)
@@ -107,7 +107,7 @@ std::vector<MoveDirection> AStar::solve(std::vector<QBlock*> blocks) {
         }
         converted.push_back(row);
     }
-    for(QBlock* block : blocks) {
+    for(Block* block : blocks) {
         std::tuple<int, int> position = block->getPosition();
         converted[get<0>(position)][get<1>(position)] = block->getVal();
     }

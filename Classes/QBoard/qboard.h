@@ -3,18 +3,15 @@
 
 #include <QFrame>
 #include <QGridLayout>
-#include "../BoardBase/boardbase.h"
-#include "../AStar/astar.h"
+#include "../Board/board.h"
 #include "../Helpers/helpers.h"
 
-class QBoard : public QGridLayout, public BoardBase{
+class QBoard : public QGridLayout, public Board{
     Q_OBJECT
 
 public:
     QBoard(int n, QWidget* parent = nullptr);
 
-    bool tryMoveBlock(QBlock* block);
-    bool tryMoveBlock(MoveDirection direction) override;
     void create() override;
     void show(QFrame &frame);
     std::vector<MoveDirection> algorithmSolve();
@@ -23,8 +20,8 @@ signals:
     void solved();
 
 private:
-    std::vector<QBlock*> Blocks;
-    bool isBoardSolved() override;
+    void moveBlock(Block* block) override;
+    void moveBlockWidget(Block* block);
     void onBlockClicked();
 };
 

@@ -6,6 +6,7 @@
 class Block {
 public:
     Block(int val, std::tuple<int, int> position);
+    virtual ~Block();
 
     int getVal();
     std::tuple<int, int> getPosition();

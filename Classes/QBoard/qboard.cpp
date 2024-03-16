@@ -1,8 +1,7 @@
 #include "qboard.h"
 
-QBoard::QBoard(int n, QWidget* parent) : QGridLayout(parent) {
+QBoard::QBoard(int n, QWidget* parent) : Board(n), QGridLayout(parent) {
     this->N = n;
-    this->IsSolved = false;
     this->setVerticalSpacing(5);
     this->setHorizontalSpacing(5);
 }
@@ -20,10 +19,10 @@ void QBoard::create() {
             this->EmptyPosition = position;
             continue;
         }
-        QBlock* qblock = new QBlock(val, position, nullptr);
-        connect(qblock, &QBlock::clicked, this, &QBoard::onBlockClicked);
-        this->Blocks.push_back(qblock);
-        this->addWidget(qblock, get<0>(position), get<1>(position));
+        QBlock* block = new QBlock(val, position, nullptr);
+        connect(block, &QBlock::clicked, this, &QBoard::onBlockClicked);
+        this->Blocks.push_back(block);
+        this->addWidget(block, get<0>(position), get<1>(position));
     }
 }
 
@@ -31,57 +30,30 @@ void QBoard::show(QFrame &frame) {
     frame.setLayout(this);
 }
 
-void QBoard::onBlockClicked() {
-    QBlock *block = dynamic_cast<QBlock*>(sender());
-    if(this->IsSolved) return;
-    if(this->tryMoveBlock(block))
-    {
-        this->removeWidget(block);
-        this->addWidget(block, get<0>(block->getPosition()), get<1>(block->getPosition()));
-        if(this->isBoardSolved())
-        {
-            this->IsSolved = true;
-            emit this->solved();
-        }
-    }
-}
-
-bool QBoard::isBoardSolved() {
-    for(QBlock *block : this->Blocks)
-    {
-        if(!(block->isPlacedCorrectly(this->N))) return false;
-    }
-    return true;
-}
-
-bool QBoard::tryMoveBlock(QBlock* block){
-    if(this->isBlockMovable(block)){
-        this->moveBlock(block);
-        return true;
-    }
-    else return false;
-}
-
-bool QBoard::tryMoveBlock(MoveDirection direction){
-    if(!this->isBlockMovable(direction)) return false;
-
-    QBlock* block = findQBlockByPosition(this->Blocks, this->getPositionToMove(direction));
-    if(block == nullptr) return false;
-
-    if(this->tryMoveBlock(block))
-    {
-        this->removeWidget(block);
-        this->addWidget(block, get<0>(block->getPosition()), get<1>(block->getPosition()));
-        if(this->isBoardSolved())
-        {
-            this->IsSolved = true;
-            emit this->solved();
-        }
-        return true;
-    }
-    else return false;
-}
-
 std::vector<MoveDirection> QBoard::algorithmSolve() {
-    return  AStar::solve(this->Blocks);
+    return AStar::solve(this->Blocks);
+}
+
+void QBoard::moveBlock(Block *block) {
+    std::tuple<int, int> tmpPosition = block->getPosition();
+    block->setPosition(EmptyPosition);
+    EmptyPosition = tmpPosition;
+    this->moveBlockWidget(block);
+}
+
+void QBoard::moveBlockWidget(Block* block) {
+    QBlock *qblock = dynamic_cast<QBlock*>(block);
+    this->removeWidget(qblock);
+    this->addWidget(qblock, get<0>(block->getPosition()), get<1>(block->getPosition()));
+    if(this->isBoardSolved())
+    {
+        this->IsSolved = true;
+        emit this->solved();
+    }
+}
+
+void QBoard::onBlockClicked() {
+    if(this->IsSolved) return;
+    QBlock *block = dynamic_cast<QBlock*>(sender());
+    this->tryMoveBlock(block);
 }

@@ -27,7 +27,6 @@ class AStar
 {
 public:
     static std::vector<MoveDirection> solve(std::vector<Block*> blocks);
-    static std::vector<MoveDirection> solve(std::vector<QBlock*> blocks);
 
 private:
     static int calculateHeuristic(const std::vector<std::vector<int>> &board);

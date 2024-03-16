@@ -1,26 +1,36 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "../BoardBase/boardbase.h"
 #include "../QBlock/qblock.h"
 #include "qframe.h"
 #include <QGridLayout>
 #include <random>
+#include "../../enums.h"
+#include "../BoardGenerator/boardgenerator.h"
+#include "../AStar/astar.h"
 
-#define MAX_BOARD_CORRECTNESS 0.5
-
-class Board : public BoardBase{
+class Board{
 
 public:
     Board(int n);
+    bool IsSolved;
 
-    void tryMoveBlock(Block* block);
-    void create() override;
-    void show();
+    virtual void create();
+    bool tryMoveBlock(Block* block);
+    bool tryMoveBlock(MoveDirection direction);
+    virtual void show();
 
-private:
+protected:
+    int N;
+    std::tuple<int, int> EmptyPosition;
     std::vector<Block*> Blocks;
-    bool isBoardSolved() override;
+
+    Block* findBlockByPosition(std::tuple<int, int> position);
+    bool isBoardSolved();
+    bool isBlockMovable(Block* block);
+    bool isBlockMovable(MoveDirection direction);
+    std::tuple<int, int> getPositionToMove(MoveDirection direction);
+    virtual void moveBlock(Block* block);
 };
 
 #endif // BOARD_H
