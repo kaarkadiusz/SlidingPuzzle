@@ -48,10 +48,25 @@ void BoardBase::moveBlock(QBlock *block) {
     EmptyPosition = tmpPosition;
 }
 
+std::tuple<int, int> BoardBase::getPositionToMove(MoveDirection direction) {
+    switch(direction)
+    {
+    case Up:
+        return std::tuple<int, int> (get<0>(this->EmptyPosition) + 1, get<1>(this->EmptyPosition));
+    case Down:
+        return std::tuple<int, int> (get<0>(this->EmptyPosition) - 1, get<1>(this->EmptyPosition));
+    case Left:
+        return std::tuple<int, int> (get<0>(this->EmptyPosition), get<1>(this->EmptyPosition) + 1);
+    case Right:
+        return std::tuple<int, int> (get<0>(this->EmptyPosition), get<1>(this->EmptyPosition) - 1);
+    }
+}
+
 QBlock* BoardBase::findQBlockByPosition(std::vector<QBlock*> blocks, std::tuple<int, int> position) {
     for(QBlock* block : blocks)
     {
-        if(block->getPosition() == position) return block;
+        std::tuple<int, int> blockPosition = block->getPosition();
+        if(get<0>(blockPosition) == get<0>(position) && get<1>(blockPosition) == get<1>(position)) return block;
     }
     return nullptr;
 }

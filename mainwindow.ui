@@ -63,6 +63,12 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="keyboardTracking">
+     <bool>false</bool>
+    </property>
     <property name="minimum">
      <number>3</number>
     </property>

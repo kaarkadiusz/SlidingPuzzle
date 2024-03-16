@@ -65,8 +65,19 @@ bool QBoard::tryMoveBlock(QBlock* block){
 bool QBoard::tryMoveBlock(MoveDirection direction){
     if(!this->isBlockMovable(direction)) return false;
 
-    QBlock* block = findQBlockByPosition(this->Blocks, this->EmptyPosition);
+    QBlock* block = findQBlockByPosition(this->Blocks, this->getPositionToMove(direction));
     if(block == nullptr) return false;
 
-    return tryMoveBlock(block);
+    if(this->tryMoveBlock(block))
+    {
+        this->removeWidget(block);
+        this->addWidget(block, get<0>(block->getPosition()), get<1>(block->getPosition()));
+        if(this->isBoardSolved())
+        {
+            this->IsSolved = true;
+            emit this->solved();
+        }
+        return true;
+    }
+    else return false;
 }

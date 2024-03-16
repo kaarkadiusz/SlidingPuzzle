@@ -4,13 +4,7 @@
 #include "../Block/block.h"
 #include "../QBlock/qblock.h"
 #include "../BoardGenerator/boardgenerator.h"
-
-enum MoveDirection {
-    Up,
-    Down,
-    Left,
-    Right
-};
+#include "../../enums.h"
 
 class BoardBase
 {
@@ -35,6 +29,8 @@ protected:
     void moveBlock(QBlock *block);
 
     bool isBlockMovable(MoveDirection direction);
+
+    std::tuple<int, int> getPositionToMove(MoveDirection direction);
 
 private:
     bool isBlockMovable(std::tuple<int, int> position);

@@ -33,6 +33,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Classes/QGame/qgame.h Classes/QGame/qgame.cpp
         Classes/BoardGenerator/boardgenerator.h Classes/BoardGenerator/boardgenerator.cpp
         Classes/BoardBase/boardbase.h Classes/BoardBase/boardbase.cpp
+        enums.h
 
 
 

@@ -1,8 +1,8 @@
 #include "qgame.h"
 
-QGame::QGame(QFrame* frame, QObject* parent) : QObject(parent) {
+QGame::QGame(QFrame* frame) {
     this->Frame = frame;
-
+    this->isInitialized = false;
 }
 
 void QGame::init(int n) {
@@ -27,6 +27,7 @@ void QGame::init(int n) {
     connect(this->Board, &QBoard::solved, this, &QGame::onBoardSolved);
     this->Board->create();
     this->Board->show(*this->Frame);
+    this->isInitialized = true;
 }
 
 void QGame::onBoardSolved() {
@@ -43,4 +44,11 @@ void QGame::clearLayout(QLayout *layout) {
         }
     }
     delete layout;
+}
+
+void QGame::tryMove(MoveDirection direction) {
+    if(this->isInitialized && !this->Board->IsSolved)
+    {
+        this->Board->tryMoveBlock(direction);
+    }
 }

@@ -6,19 +6,23 @@
 #include "../PromptDialog/promptdialog.h"
 #include "qlayout.h"
 #include "../Game/game.h"
+#include "../../enums.h"
 
-class QGame : public QObject, public Game{
+class QGame : public QWidget, public Game{
     Q_OBJECT
 
 public:
-    QGame(QFrame* frame, QObject *parent = nullptr);
+    QGame(QFrame* frame);
 
     void init(int n);
+    void tryMove(MoveDirection direction);
 
 private:
+    QFrame *Frame;
+    bool isInitialized;
+
     void onBoardSolved();
     void clearLayout(QLayout *layout);
-    QFrame *Frame;
 };
 
 #endif // QGAME_H
