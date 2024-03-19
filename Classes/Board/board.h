@@ -13,12 +13,14 @@ class Board{
 
 public:
     Board(int n);
+    virtual ~Board();
     bool IsSolved;
 
     virtual void create();
     bool tryMoveBlock(Block* block);
     bool tryMoveBlock(MoveDirection direction);
     virtual void show();
+    std::vector<MoveDirection> algorithmSolve();
 
 protected:
     int N;

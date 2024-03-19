@@ -30,10 +30,6 @@ void QBoard::show(QFrame &frame) {
     frame.setLayout(this);
 }
 
-std::vector<MoveDirection> QBoard::algorithmSolve() {
-    return AStar::solve(this->Blocks);
-}
-
 void QBoard::moveBlock(Block *block) {
     std::tuple<int, int> tmpPosition = block->getPosition();
     block->setPosition(EmptyPosition);

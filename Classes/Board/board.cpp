@@ -5,6 +5,10 @@ Board::Board(int n) {
     this->IsSolved = false;
 }
 
+Board::~Board() {
+
+}
+
 void Board::create() {
     this->Blocks.clear();
     std::vector<int> board = BoardGenerator::generateBoard(this->N);
@@ -91,4 +95,8 @@ void Board::moveBlock(Block *block) {
     std::tuple<int, int> tmpPosition = block->getPosition();
     block->setPosition(EmptyPosition);
     EmptyPosition = tmpPosition;
+}
+
+std::vector<MoveDirection> Board::algorithmSolve() {
+    return AStar::solve(this->Blocks);
 }

@@ -6,27 +6,13 @@ QGame::QGame(QFrame* frame) {
 }
 
 void QGame::init(int n) {
-    auto existingLayout = this->Frame->layout();
-    if(existingLayout)
-    {
-        if(this->Board->IsSolved)
-        {
-            this->clearLayout(existingLayout);
-        }
-        else
-        {
-            YesNoDialog *dialog = new YesNoDialog(this->Frame);
-            if(dialog->exec() == 1)
-            {
-                this->clearLayout(existingLayout);
-            }
-            else return;
-        }
-    }
-    this->Board = new QBoard(n, this->Frame);
-    connect(this->Board, &QBoard::solved, this, &QGame::onBoardSolved);
-    this->Board->create();
-    this->Board->show(*this->Frame);
+    this->clearLayout();
+
+    QBoard* newBoard = new QBoard(n, this->Frame);
+    connect(newBoard, &QBoard::solved, this, &QGame::onBoardSolved);
+    newBoard->create();
+    newBoard->show(*this->Frame);
+    this->BoardObj = newBoard;
     this->isInitialized = true;
 }
 
@@ -35,29 +21,32 @@ void QGame::onBoardSolved() {
     dialog->exec();
 }
 
-void QGame::clearLayout(QLayout *layout) {
-    QLayoutItem* item;
-    QWidget* widget;
-    while ((item = layout->takeAt(0))) {
-        if ((widget = item->widget()) != nullptr) {
-            delete widget;
+void QGame::clearLayout() {
+    QLayout* existingLayout = this->Frame->layout();
+    if(existingLayout)
+    {
+        if(!this->BoardObj->IsSolved)
+        {
+            YesNoDialog *dialog = new YesNoDialog(this->Frame);
+            if(dialog->exec() != 1) return;
         }
+        QLayoutItem* item;
+        QWidget* widget;
+        while ((item = existingLayout->takeAt(0))) {
+            if ((widget = item->widget()) != nullptr) {
+                delete widget;
+            }
+        }
+        delete existingLayout;
     }
-    delete layout;
-}
-
-void QGame::tryMove(MoveDirection direction) {
-    if(!this->isInitialized || this->Board->IsSolved) return;
-
-    this->Board->tryMoveBlock(direction);
 }
 
 void QGame::algorithmSolve() {
-    if(!this->isInitialized || this->Board->IsSolved) return;
+    if(!this->isInitialized || this->BoardObj->IsSolved) return;
 
-    std::vector<MoveDirection> moves = this->Board->algorithmSolve();
+    std::vector<MoveDirection> moves = this->BoardObj->algorithmSolve();
 
-    for(auto move : moves) {
+    for(MoveDirection move : moves) {
         this->tryMove(move);
         Helpers::delay(300);
     }

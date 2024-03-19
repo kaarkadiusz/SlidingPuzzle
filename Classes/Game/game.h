@@ -1,15 +1,21 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../QBoard/qboard.h"
+#include "../Board/board.h"
 
 class Game {
 
 public:
     Game();
 
+    virtual void init(int n);
+    void tryMove(MoveDirection direction);
+    virtual void algorithmSolve();
+
 protected:
-    QBoard *Board;
+    bool isInitialized;
+    Board* BoardObj;
+
 };
 
 #endif // GAME_H

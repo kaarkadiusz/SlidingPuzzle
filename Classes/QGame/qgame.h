@@ -7,6 +7,7 @@
 #include "qlayout.h"
 #include "../Game/game.h"
 #include "../../enums.h"
+#include "../QBoard/qboard.h"
 
 class QGame : public QWidget, public Game{
     Q_OBJECT
@@ -14,16 +15,14 @@ class QGame : public QWidget, public Game{
 public:
     QGame(QFrame* frame);
 
-    void init(int n);
-    void tryMove(MoveDirection direction);
-    void algorithmSolve();
+    void init(int n) override;
+    void algorithmSolve() override;
 
 private:
-    QFrame *Frame;
-    bool isInitialized;
+    QFrame* Frame;
 
     void onBoardSolved();
-    void clearLayout(QLayout *layout);
+    void clearLayout();
 };
 
 #endif // QGAME_H
