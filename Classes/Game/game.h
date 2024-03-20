@@ -15,6 +15,7 @@ public:
 protected:
     bool isInitialized;
     Board* BoardObj;
+    int moveCount;
 
 };
 

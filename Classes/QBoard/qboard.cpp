@@ -31,9 +31,8 @@ void QBoard::show(QFrame &frame) {
 }
 
 void QBoard::moveBlock(Block *block) {
-    std::tuple<int, int> tmpPosition = block->getPosition();
-    block->setPosition(EmptyPosition);
-    EmptyPosition = tmpPosition;
+    Board::moveBlock(block);
+    emit this->blockMoved();
     this->moveBlockWidget(block);
 }
 

@@ -17,9 +17,9 @@ public:
     bool IsSolved;
 
     virtual void create();
+    virtual void show();
     bool tryMoveBlock(Block* block);
     bool tryMoveBlock(MoveDirection direction);
-    virtual void show();
     std::vector<MoveDirection> algorithmSolve();
 
 protected:

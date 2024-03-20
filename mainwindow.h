@@ -25,6 +25,7 @@ protected:
 private slots:
     void on_newGameButton_clicked();
     void on_solveButton_clicked();
+    void blockMoved(int count);
 
 private:
     QGame *SlidingPuzzle;

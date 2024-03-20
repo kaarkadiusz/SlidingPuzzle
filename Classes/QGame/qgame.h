@@ -18,9 +18,13 @@ public:
     void init(int n) override;
     void algorithmSolve() override;
 
+signals:
+    void blockMoved(int count);
+
 private:
     QFrame* Frame;
 
+    void onBlockMoved();
     void onBoardSolved();
     void clearLayout();
 };

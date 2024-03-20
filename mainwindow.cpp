@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setFocusPolicy(Qt::StrongFocus);
     this->SlidingPuzzle = new QGame(ui->frame);
+    connect(this->SlidingPuzzle, &QGame::blockMoved, this, &MainWindow::blockMoved);
 }
 
 MainWindow::~MainWindow()
@@ -24,6 +25,10 @@ void MainWindow::on_newGameButton_clicked()
 void MainWindow::on_solveButton_clicked()
 {
     this->SlidingPuzzle->algorithmSolve();
+}
+
+void MainWindow::blockMoved(int count) {
+    this->ui->moveCountLabel->setText(QString::number(count));
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)

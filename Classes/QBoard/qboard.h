@@ -18,11 +18,14 @@ public:
 
 signals:
     void solved();
+    void blockMoved();
+
+private slots:
+    void onBlockClicked();
 
 private:
     void moveBlock(Block* block) override;
     void moveBlockWidget(Block* block);
-    void onBlockClicked();
 };
 
 #endif // QBOARD_H

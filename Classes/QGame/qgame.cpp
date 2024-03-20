@@ -7,9 +7,11 @@ QGame::QGame(QFrame* frame) {
 
 void QGame::init(int n) {
     this->clearLayout();
+    this->moveCount = 0;
 
     QBoard* newBoard = new QBoard(n, this->Frame);
     connect(newBoard, &QBoard::solved, this, &QGame::onBoardSolved);
+    connect(newBoard, &QBoard::blockMoved, this, &QGame::onBlockMoved);
     newBoard->create();
     newBoard->show(*this->Frame);
     this->BoardObj = newBoard;
@@ -19,6 +21,11 @@ void QGame::init(int n) {
 void QGame::onBoardSolved() {
     PromptDialog *dialog = new PromptDialog(this->Frame);
     dialog->exec();
+}
+
+void QGame::onBlockMoved() {
+    this->moveCount++;
+    emit this->blockMoved(this->moveCount);
 }
 
 void QGame::clearLayout() {
