@@ -24,20 +24,6 @@ std::vector<int> BoardGenerator::getRandomArray(int n) {
     return randomArray;
 }
 
-int BoardGenerator::getInversionCount(std::vector<int> array) {
-    int inversionCount = 0;
-    for(int i = 0; i < array.size(); i++)
-    {
-        int element = array[i];
-        if(element == 0) continue;
-        for(int j = i; j < array.size(); j++)
-        {
-            if (element > array[j] && array[j] != 0) inversionCount++;
-        }
-    }
-    return inversionCount;
-}
-
 double BoardGenerator::getCorrectness(std::vector<int> array) {
     int correctlyPlaced = 0;
     for(int i = 0; i < array.size(); i++)
@@ -50,7 +36,7 @@ double BoardGenerator::getCorrectness(std::vector<int> array) {
 
 bool BoardGenerator::isSolvable(std::vector<int> array) {
     int n = std::sqrt(array.size());
-    int inversionCount = getInversionCount(array);
+    int inversionCount = getInversionCount<int>(array);
     if(n % 2 == 0)
     {
         int row = std::distance(array.begin(), std::find(array.begin(), array.end(), 0)) / n;

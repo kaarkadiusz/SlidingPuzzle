@@ -17,7 +17,7 @@ void QGame::init(int n) {
     newBoard->show(*this->Frame);
     this->BoardObj = newBoard;
 
-    if(this->Timer == nullptr)
+    if(this->Timer == nullptr || !this->isInitialized)
     {
         this->Timer = new QTimer(this);
         connect(this->Timer , SIGNAL(timeout()), this, SLOT(onTimeElapsedChanged()));

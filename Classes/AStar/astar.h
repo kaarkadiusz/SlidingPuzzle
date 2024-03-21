@@ -1,13 +1,8 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 
-#include <string>
 #include <vector>
-#include "qdebug.h"
-#include <map>
-#include <queue>
 #include "../Block/block.h"
-#include "../QBlock/qblock.h"
 #include "../../enums.h"
 
 struct PuzzleState {

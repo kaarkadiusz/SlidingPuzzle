@@ -1,4 +1,7 @@
 #include "astar.h"
+#include <cmath>
+#include <map>
+#include <queue>
 
 
 int AStar::calculateHeuristic(const std::vector<std::vector<int>> &board) {
@@ -109,7 +112,7 @@ std::vector<MoveDirection> AStar::solve(std::vector<Block*> blocks) {
     }
     for(Block* block : blocks) {
         std::tuple<int, int> position = block->getPosition();
-        converted[get<0>(position)][get<1>(position)] = block->getVal();
+        converted[std::get<0>(position)][std::get<1>(position)] = block->getVal();
     }
     return solvePuzzle(converted);
 }
