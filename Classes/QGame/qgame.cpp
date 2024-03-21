@@ -5,8 +5,9 @@ QGame::QGame(QFrame* frame) {
     this->isInitialized = false;
 }
 
-void QGame::init(int n) {
-    this->clearLayout();
+bool QGame::init(int n) {
+    this->N = n;
+    if(!this->clearLayout()) return false;
     this->moveCount = 0;
     this->timeElapsed = 0;
 
@@ -31,6 +32,7 @@ void QGame::init(int n) {
     emit this->timeElapsedChanged(0);
     emit this->moveCountChanged(0);
     this->isInitialized = true;
+    return true;
 }
 
 void QGame::onBoardSolved() {
@@ -49,14 +51,14 @@ void QGame::onTimeElapsedChanged() {
     emit this->timeElapsedChanged(this->timeElapsed);
 }
 
-void QGame::clearLayout() {
+bool QGame::clearLayout() {
     QLayout* existingLayout = this->Frame->layout();
     if(existingLayout)
     {
         if(!this->BoardObj->IsSolved)
         {
             YesNoDialog *dialog = new YesNoDialog(this->Frame);
-            if(dialog->exec() != 1) return;
+            if(dialog->exec() != 1) return false;
         }
         QLayoutItem* item;
         QWidget* widget;
@@ -67,6 +69,7 @@ void QGame::clearLayout() {
         }
         delete existingLayout;
     }
+    return true;
 }
 
 void QGame::algorithmSolve() {

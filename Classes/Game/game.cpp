@@ -4,13 +4,16 @@ Game::Game(){
     this->BoardObj = nullptr;
 }
 
-void Game::init(int n) {
+bool Game::init(int n) {
+    this->N = n;
     this->BoardObj = new Board(n);
     this->BoardObj->create();
     this->BoardObj->show();
     this->moveCount = 0;
     this->timeElapsed = 0;
     this->isInitialized = true;
+
+    return true;
 }
 
 void Game::tryMove(MoveDirection direction) {
@@ -35,4 +38,8 @@ void Game::onBlockMoved() {
 
 void Game::onTimeElapsedChanged() {
     this->timeElapsed++;
+}
+
+int Game::getN() {
+    return this->N;
 }

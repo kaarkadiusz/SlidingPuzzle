@@ -16,7 +16,7 @@ class QGame : public QWidget, public Game{
 public:
     QGame(QFrame* frame);
 
-    void init(int n) override;
+    bool init(int n) override;
     void algorithmSolve() override;
 
 signals:
@@ -32,7 +32,7 @@ private:
 
     void onBlockMoved() override;
     void onBoardSolved();
-    void clearLayout();
+    bool clearLayout();
 };
 
 #endif // QGAME_H

@@ -19,12 +19,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newGameButton_clicked()
 {
-    int n = ui->nSpinBox->value();
-    this->SlidingPuzzle->init(n);
+    int n = this->ui->nSpinBox->value();
+    if(this->SlidingPuzzle->init(n)){
+        if(n == 3) this->ui->solveButton->setEnabled(true);
+        else this->ui->solveButton->setEnabled(false);
+    }
 }
 
 void MainWindow::on_solveButton_clicked()
 {
+    if(this->SlidingPuzzle->getN() != 3) return;
     this->SlidingPuzzle->algorithmSolve();
 }
 

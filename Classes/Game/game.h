@@ -8,11 +8,13 @@ class Game {
 public:
     Game();
 
-    virtual void init(int n);
+    virtual bool init(int n);
     void tryMove(MoveDirection direction);
     virtual void algorithmSolve();
+    int getN();
 
 protected:
+    int N;
     bool isInitialized;
     Board* BoardObj;
     int moveCount;
