@@ -11,3 +11,9 @@ void Helpers::delay( int millisecondsToWait )
         QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
     }
 }
+
+std::string Helpers::intToTimeString(int s) {
+    std::ostringstream oss;
+    oss << std::setfill('0') << std::setw(2) << s / 60 << ":" << std::setw(2) << s % 60;
+    return oss.str();
+}

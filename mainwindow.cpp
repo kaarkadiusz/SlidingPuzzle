@@ -8,7 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setFocusPolicy(Qt::StrongFocus);
     this->SlidingPuzzle = new QGame(ui->frame);
-    connect(this->SlidingPuzzle, &QGame::blockMoved, this, &MainWindow::blockMoved);
+    connect(this->SlidingPuzzle, &QGame::moveCountChanged, this, &MainWindow::blockMoved);
+    connect(this->SlidingPuzzle, &QGame::timeElapsedChanged, this, &MainWindow::elapsedTimeChanged);
 }
 
 MainWindow::~MainWindow()
@@ -29,6 +30,10 @@ void MainWindow::on_solveButton_clicked()
 
 void MainWindow::blockMoved(int count) {
     this->ui->moveCountLabel->setText(QString::number(count));
+}
+
+void MainWindow::elapsedTimeChanged(int time) {
+    this->ui->timeElapsedLabel->setText(QString::fromStdString(Helpers::intToTimeString(time)));
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)

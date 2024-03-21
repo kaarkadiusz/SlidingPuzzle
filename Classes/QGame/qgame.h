@@ -2,6 +2,7 @@
 #define QGAME_H
 
 #include <QFrame>
+#include <QTimer>
 #include "../YesNoDialog/yesnodialog.h"
 #include "../PromptDialog/promptdialog.h"
 #include "qlayout.h"
@@ -19,12 +20,17 @@ public:
     void algorithmSolve() override;
 
 signals:
-    void blockMoved(int count);
+    void moveCountChanged(int count);
+    void timeElapsedChanged(int time);
+
+private slots:
+    void onTimeElapsedChanged() override;
 
 private:
     QFrame* Frame;
+    QTimer* Timer;
 
-    void onBlockMoved();
+    void onBlockMoved() override;
     void onBoardSolved();
     void clearLayout();
 };

@@ -53,7 +53,7 @@ bool BoardGenerator::isSolvable(std::vector<int> array) {
     int inversionCount = getInversionCount(array);
     if(n % 2 == 0)
     {
-        int row = std::distance(array.begin(), std::find(array.begin(), array.end(), n * n - 1)) / n;
+        int row = std::distance(array.begin(), std::find(array.begin(), array.end(), 0)) / n;
         return (inversionCount % 2 == 0 && row % 2 != 0) || (inversionCount % 2 != 0 && row % 2 == 0);
     }
     else return inversionCount % 2 == 0;

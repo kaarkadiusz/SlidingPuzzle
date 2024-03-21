@@ -16,7 +16,10 @@ protected:
     bool isInitialized;
     Board* BoardObj;
     int moveCount;
+    int timeElapsed;
 
+    virtual void onBlockMoved();
+    virtual void onTimeElapsedChanged();
 };
 
 #endif // GAME_H

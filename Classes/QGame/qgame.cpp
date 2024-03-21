@@ -8,6 +8,7 @@ QGame::QGame(QFrame* frame) {
 void QGame::init(int n) {
     this->clearLayout();
     this->moveCount = 0;
+    this->timeElapsed = 0;
 
     QBoard* newBoard = new QBoard(n, this->Frame);
     connect(newBoard, &QBoard::solved, this, &QGame::onBoardSolved);
@@ -15,17 +16,37 @@ void QGame::init(int n) {
     newBoard->create();
     newBoard->show(*this->Frame);
     this->BoardObj = newBoard;
+
+    if(this->Timer == nullptr)
+    {
+        this->Timer = new QTimer(this);
+        connect(this->Timer , SIGNAL(timeout()), this, SLOT(onTimeElapsedChanged()));
+    }
+    else
+    {
+        this->Timer->stop();
+    }
+    this->Timer->start(1000);
+
+    emit this->timeElapsedChanged(0);
+    emit this->moveCountChanged(0);
     this->isInitialized = true;
 }
 
 void QGame::onBoardSolved() {
+    this->Timer->stop();
     PromptDialog *dialog = new PromptDialog(this->Frame);
     dialog->exec();
 }
 
 void QGame::onBlockMoved() {
-    this->moveCount++;
-    emit this->blockMoved(this->moveCount);
+    Game::onBlockMoved();
+    emit this->moveCountChanged(this->moveCount);
+}
+
+void QGame::onTimeElapsedChanged() {
+    Game::onTimeElapsedChanged();
+    emit this->timeElapsedChanged(this->timeElapsed);
 }
 
 void QGame::clearLayout() {
@@ -58,3 +79,5 @@ void QGame::algorithmSolve() {
         Helpers::delay(300);
     }
 }
+
+

@@ -8,6 +8,8 @@ void Game::init(int n) {
     this->BoardObj = new Board(n);
     this->BoardObj->create();
     this->BoardObj->show();
+    this->moveCount = 0;
+    this->timeElapsed = 0;
     this->isInitialized = true;
 }
 
@@ -25,4 +27,12 @@ void Game::algorithmSolve() {
         this->tryMove(move);
         // Helpers::delay(300);
     }
+}
+
+void Game::onBlockMoved() {
+    this->moveCount++;
+}
+
+void Game::onTimeElapsedChanged() {
+    this->timeElapsed++;
 }

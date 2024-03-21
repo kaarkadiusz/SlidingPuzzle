@@ -4,6 +4,7 @@
 #include "Classes/QGame/qgame.h"
 #include <QMainWindow>
 #include <QKeyEvent>
+#include "Classes/Helpers/helpers.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +27,7 @@ private slots:
     void on_newGameButton_clicked();
     void on_solveButton_clicked();
     void blockMoved(int count);
+    void elapsedTimeChanged(int time);
 
 private:
     QGame *SlidingPuzzle;
