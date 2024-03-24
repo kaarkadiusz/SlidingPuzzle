@@ -30,7 +30,7 @@ private slots:
     void elapsedTimeChanged(int time);
 
 private:
-    QGame *SlidingPuzzle;
+    QGame* SlidingPuzzle;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

@@ -1,7 +1,7 @@
 #include "block.h"
 
 Block::Block(int val, std::tuple<int, int> position){
-    this->Val = val;
+    this->Value = val;
     this->Position = position;
 }
 
@@ -18,9 +18,9 @@ void Block::setPosition(std::tuple<int, int> newPosition) {
 }
 
 bool Block::isPlacedCorrectly(int n){
-    return std::get<0>(this->Position) * n + std::get<1>(this->Position) == this->Val - 1;
+    return std::get<0>(this->Position) * n + std::get<1>(this->Position) == this->Value - 1;
 }
 
-int Block::getVal() {
-    return this->Val;
+int Block::getValue() {
+    return this->Value;
 }

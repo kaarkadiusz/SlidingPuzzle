@@ -112,7 +112,7 @@ std::vector<MoveDirection> AStar::solve(std::vector<Block*> blocks) {
     }
     for(Block* block : blocks) {
         std::tuple<int, int> position = block->getPosition();
-        converted[std::get<0>(position)][std::get<1>(position)] = block->getVal();
+        converted[std::get<0>(position)][std::get<1>(position)] = block->getValue();
     }
     return solvePuzzle(converted);
 }

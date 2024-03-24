@@ -9,16 +9,16 @@ public:
     Game();
 
     virtual bool init(int n);
-    void tryMove(MoveDirection direction);
     virtual void algorithmSolve();
+    void tryMove(MoveDirection direction);
     int getN();
 
 protected:
     int N;
-    bool isInitialized;
+    bool IsInitialized;
     Board* BoardObj;
-    int moveCount;
-    int timeElapsed;
+    int MoveCount;
+    int TimeElapsed;
 
     virtual void onBlockMoved();
     virtual void onTimeElapsedChanged();

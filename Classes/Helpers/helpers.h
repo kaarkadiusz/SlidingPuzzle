@@ -6,7 +6,7 @@
 class Helpers
 {
 public:
-    static void delay( int millisecondsToWait );
+    static void delay( int milliseconds );
     static std::string intToTimeString(int s);
 };
 

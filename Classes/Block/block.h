@@ -8,13 +8,13 @@ public:
     Block(int val, std::tuple<int, int> position);
     virtual ~Block();
 
-    int getVal();
+    bool isPlacedCorrectly(int n);
+    int getValue();
     std::tuple<int, int> getPosition();
     void setPosition(std::tuple<int, int> newPosition);
-    bool isPlacedCorrectly(int n);
 
 protected:
-    int Val;
+    int Value;
     std::tuple<int, int> Position;
 };
 

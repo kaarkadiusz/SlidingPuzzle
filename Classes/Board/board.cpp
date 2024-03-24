@@ -75,9 +75,9 @@ bool Board::isBlockMovable(Block *block) {
 }
 
 bool Board::isBlockMovable(MoveDirection direction){
-    if( (direction == MoveDirection::Up && get<0>(this->EmptyPosition) == N - 1) ||
+    if( (direction == MoveDirection::Up && get<0>(this->EmptyPosition) == this->N - 1) ||
         (direction == MoveDirection::Down && get<0>(this->EmptyPosition) == 0) ||
-        (direction == MoveDirection::Left && get<1>(this->EmptyPosition) == N - 1) ||
+        (direction == MoveDirection::Left && get<1>(this->EmptyPosition) == this->N - 1) ||
         (direction == MoveDirection::Right && get<1>(this->EmptyPosition) == 0) )
         return false;
     else return true;
@@ -94,9 +94,13 @@ std::tuple<int, int> Board::getPositionToMove(MoveDirection direction) {
 void Board::moveBlock(Block *block) {
     std::tuple<int, int> tmpPosition = block->getPosition();
     block->setPosition(EmptyPosition);
-    EmptyPosition = tmpPosition;
+    this->EmptyPosition= tmpPosition;
 }
 
 std::vector<MoveDirection> Board::algorithmSolve() {
     return AStar::solve(this->Blocks);
+}
+
+bool Board::getIsSolved(){
+    return this->IsSolved;
 }

@@ -9,20 +9,20 @@ bool Game::init(int n) {
     this->BoardObj = new Board(n);
     this->BoardObj->create();
     this->BoardObj->show();
-    this->moveCount = 0;
-    this->timeElapsed = 0;
-    this->isInitialized = true;
+    this->MoveCount = 0;
+    this->TimeElapsed = 0;
+    this->IsInitialized = true;
 
     return true;
 }
 
 void Game::tryMove(MoveDirection direction) {
-    if(!this->isInitialized || this->BoardObj->IsSolved) return;
+    if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
     this->BoardObj->tryMoveBlock(direction);
 }
 
 void Game::algorithmSolve() {
-    if(!this->isInitialized || this->BoardObj->IsSolved) return;
+    if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
 
     std::vector<MoveDirection> moves = this->BoardObj->algorithmSolve();
 
@@ -33,11 +33,11 @@ void Game::algorithmSolve() {
 }
 
 void Game::onBlockMoved() {
-    this->moveCount++;
+    this->MoveCount++;
 }
 
 void Game::onTimeElapsedChanged() {
-    this->timeElapsed++;
+    this->TimeElapsed++;
 }
 
 int Game::getN() {

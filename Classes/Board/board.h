@@ -14,16 +14,17 @@ class Board{
 public:
     Board(int n);
     virtual ~Board();
-    bool IsSolved;
 
     virtual void create();
     virtual void show();
     bool tryMoveBlock(Block* block);
     bool tryMoveBlock(MoveDirection direction);
     std::vector<MoveDirection> algorithmSolve();
+    bool getIsSolved();
 
 protected:
     int N;
+    bool IsSolved;
     std::tuple<int, int> EmptyPosition;
     std::vector<Block*> Blocks;
 
