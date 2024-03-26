@@ -10,17 +10,36 @@
 #include "../../enums.h"
 #include "../QBoard/qboard.h"
 
+/**
+ * @class QGame
+ * @brief Rozszerzenie graficzne klasy \ref Game.
+ */
 class QGame : public QWidget, public Game{
     Q_OBJECT
 
 public:
+    /**
+    * @brief Tworzy obiekt klasy QGame.
+    *
+    * @param frame Obiekt QFrame z biblioteki qt, w którym będzię rysowana układanka.
+    */
     QGame(QFrame* frame);
 
     bool init(int n) override;
     void algorithmSolve() override;
 
 signals:
+    /**
+    * @brief Sygnał, przesyłający informacje o aktualnej ilości ruchów, wywoływany w przypadku wykonania ruchu.
+    *
+    * @param count Wartość licznika ruchów.
+    */
     void moveCountChanged(int count);
+    /**
+    * @brief Sygnał, przesyłający informacje o aktualnym czasie sesji wyrażonym w sekundach, wywoływany co sekundę.
+    *
+    * @param time Aktualny czas wyrażony w sekundach.
+    */
     void timeElapsedChanged(int time);
 
 private slots:

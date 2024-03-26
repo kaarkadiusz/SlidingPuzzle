@@ -18,9 +18,21 @@ struct PuzzleState {
     }
 };
 
+
+/**
+ * @class AStar
+ * @brief Klasa, która służy do automatycznego rozwiązania planszy.
+ */
 class AStar
 {
 public:
+    /**
+    * @brief Wykorzystuje algorytm A* do znalezienia optymalnego rozwiązania układanki.
+    *
+    * @param blocks Kontener klocków. Reprezentacja planszy jako kontener obiektów klasy Block.
+    *
+    * @return Kontener zapełniony wartościami enum, których wykonanie w ustalonej sekwencji (od początku do końca kontenera) prowadzi do rozwiązania układanki.
+    */
     static std::vector<MoveDirection> solve(std::vector<Block*> blocks);
 
 private:
