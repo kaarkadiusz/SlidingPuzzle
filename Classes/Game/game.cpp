@@ -10,6 +10,7 @@ bool Game::init(int n) {
     this->BoardObj->create();
     this->BoardObj->show();
     this->MoveCount = 0;
+    this->MoveHistory = std::vector<MoveDirection>();
     this->TimeElapsed = 0;
     this->IsInitialized = true;
 
@@ -32,8 +33,9 @@ void Game::algorithmSolve() {
     }
 }
 
-void Game::onBlockMoved() {
+void Game::onBlockMoved(MoveDirection direction) {
     this->MoveCount++;
+    this->MoveHistory.push_back(direction);
 }
 
 void Game::onTimeElapsedChanged() {

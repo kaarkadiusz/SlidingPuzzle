@@ -6,9 +6,10 @@ QGame::QGame(QFrame* frame) {
 }
 
 bool QGame::init(int n) {
-    this->N = n;
     if(!this->clearLayout()) return false;
+    this->N = n;
     this->MoveCount = 0;
+    this->MoveHistory = std::vector<MoveDirection>();
     this->TimeElapsed = 0;
 
     QBoard* newBoard = new QBoard(n, this->Frame);
@@ -41,9 +42,10 @@ void QGame::onBoardSolved() {
     dialog->exec();
 }
 
-void QGame::onBlockMoved() {
-    Game::onBlockMoved();
+void QGame::onBlockMoved(MoveDirection direction) {
+    Game::onBlockMoved(direction);
     emit this->moveCountChanged(this->MoveCount);
+    emit this->moveHistoryChanged(this->MoveHistory);
 }
 
 void QGame::onTimeElapsedChanged() {

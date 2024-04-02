@@ -36,6 +36,12 @@ signals:
     */
     void moveCountChanged(int count);
     /**
+    * @brief Sygnał, przesyłający informacje o historii wykonanych ruchów, wywoływany w przypadku wykonania ruchu.
+    *
+    * @param moveHistory Historia ruchów.
+    */
+    void moveHistoryChanged(std::vector<MoveDirection> moveHistory);
+    /**
     * @brief Sygnał, przesyłający informacje o aktualnym czasie sesji wyrażonym w sekundach, wywoływany co sekundę.
     *
     * @param time Aktualny czas wyrażony w sekundach.
@@ -49,7 +55,7 @@ private:
     QFrame* Frame;
     QTimer* Timer;
 
-    void onBlockMoved() override;
+    void onBlockMoved(MoveDirection direction) override;
     void onBoardSolved();
     bool clearLayout();
 };

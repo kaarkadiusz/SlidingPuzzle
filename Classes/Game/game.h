@@ -66,11 +66,15 @@ protected:
     * @brief Licznik czasu sprędzonego w danej sesji w sekundach.
     */
     int TimeElapsed;
+    /**
+    * @brief Historia wykonanych ruchów.
+    */
+    std::vector<MoveDirection> MoveHistory;
 
     /**
     * @brief Metoda, która aktualizuje licznik ruchów.
     */
-    virtual void onBlockMoved();
+    virtual void onBlockMoved(MoveDirection direction);
     /**
     * @brief Metoda, która aktualizuje licznik czasu.
     */

@@ -38,7 +38,7 @@ signals:
     /**
     * @brief Sygnał, informujący o wykonaniu ruchu.
     */
-    void blockMoved();
+    void blockMoved(MoveDirection direction);
 
 private slots:
     void onBlockClicked();

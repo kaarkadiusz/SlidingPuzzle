@@ -8,7 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setFocusPolicy(Qt::StrongFocus);
     this->SlidingPuzzle = new QGame(ui->frame);
-    connect(this->SlidingPuzzle, &QGame::moveCountChanged, this, &MainWindow::blockMoved);
+    connect(this->SlidingPuzzle, &QGame::moveCountChanged, this, &MainWindow::moveCountChanged);
+    connect(this->SlidingPuzzle, &QGame::moveHistoryChanged, this, &MainWindow::moveHistoryChanged);
     connect(this->SlidingPuzzle, &QGame::timeElapsedChanged, this, &MainWindow::elapsedTimeChanged);
 }
 
@@ -23,6 +24,7 @@ void MainWindow::on_newGameButton_clicked()
     if(this->SlidingPuzzle->init(n)){
         if(n == 3) this->ui->solveButton->setEnabled(true);
         else this->ui->solveButton->setEnabled(false);
+        this->ui->moveHistoryList->clear();
     }
 }
 
@@ -32,7 +34,21 @@ void MainWindow::on_solveButton_clicked()
     this->SlidingPuzzle->algorithmSolve();
 }
 
-void MainWindow::blockMoved(int count) {
+void MainWindow::moveHistoryChanged(std::vector<MoveDirection> moveHistory) {
+    this->ui->moveHistoryList->clear();
+    QListWidgetItem *moveItem;
+    int i = 1;
+    for(MoveDirection move : moveHistory) {
+        if(move == MoveDirection::Down) moveItem = new QListWidgetItem(QString("%1. %2").arg(i++).arg("↓"));
+        else if(move == MoveDirection::Up) moveItem = new QListWidgetItem(QString("%1. %2").arg(i++).arg("↑"));
+        else if(move == MoveDirection::Left) moveItem = new QListWidgetItem(QString("%1. %2").arg(i++).arg("←"));
+        else if(move == MoveDirection::Right) moveItem = new QListWidgetItem(QString("%1. %2").arg(i++).arg("→"));
+        this->ui->moveHistoryList->addItem(moveItem);
+    }
+    this->ui->moveHistoryList->scrollToBottom();
+}
+
+void MainWindow::moveCountChanged(int count) {
     this->ui->moveCountLabel->setText(QString::number(count));
 }
 

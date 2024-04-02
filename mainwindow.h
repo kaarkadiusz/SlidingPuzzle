@@ -26,7 +26,8 @@ protected:
 private slots:
     void on_newGameButton_clicked();
     void on_solveButton_clicked();
-    void blockMoved(int count);
+    void moveHistoryChanged(std::vector<MoveDirection> moveHistory);
+    void moveCountChanged(int count);
     void elapsedTimeChanged(int time);
 
 private:
