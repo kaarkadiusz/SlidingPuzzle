@@ -7,16 +7,11 @@ QGame::QGame(QFrame* frame) {
 
 bool QGame::init(int n) {
     if(!this->clearLayout()) return false;
-    this->N = n;
-    this->MoveCount = 0;
-    this->MoveHistory = std::vector<MoveDirection>();
-    this->TimeElapsed = 0;
 
     QBoard* newBoard = new QBoard(n, this->Frame);
     connect(newBoard, &QBoard::solved, this, &QGame::onBoardSolved);
     connect(newBoard, &QBoard::blockMoved, this, &QGame::onBlockMoved);
     newBoard->create();
-    newBoard->show(*this->Frame);
     this->BoardObj = newBoard;
 
     if(this->Timer == nullptr || !this->IsInitialized)
@@ -32,18 +27,23 @@ bool QGame::init(int n) {
 
     emit this->timeElapsedChanged(0);
     emit this->moveCountChanged(0);
-    this->IsInitialized = true;
+
+    this->initVariables(n);
+    this->BoardObj->bindMoveHistory(&this->MoveHistory);
+    this->show();
     return true;
 }
 
 void QGame::onBoardSolved() {
+    if(this->IsSolved) return;
     this->Timer->stop();
+    this->IsSolved = true;
     PromptDialog *dialog = new PromptDialog(this->Frame);
     dialog->exec();
 }
 
-void QGame::onBlockMoved(MoveDirection direction) {
-    Game::onBlockMoved(direction);
+void QGame::onBlockMoved() {
+    Game::onBlockMoved();
     emit this->moveCountChanged(this->MoveCount);
     emit this->moveHistoryChanged(this->MoveHistory);
 }
@@ -74,6 +74,11 @@ bool QGame::clearLayout() {
     return true;
 }
 
+void QGame::tryMove(MoveDirection direction) {
+    QBoard* board = dynamic_cast<QBoard*>(this->BoardObj);
+    if(board->tryMove(direction)) emit this->moveHistoryChanged(this->MoveHistory);
+}
+
 void QGame::algorithmSolve() {
     if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
 
@@ -83,6 +88,11 @@ void QGame::algorithmSolve() {
         this->tryMove(move);
         Helpers::delay(300);
     }
+}
+
+void QGame::show() {
+    QBoard* board = dynamic_cast<QBoard*>(this->BoardObj);
+    this->Frame->setLayout(board);
 }
 
 

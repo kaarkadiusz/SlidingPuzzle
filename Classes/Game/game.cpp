@@ -5,21 +5,31 @@ Game::Game(){
 }
 
 bool Game::init(int n) {
-    this->N = n;
     this->BoardObj = new Board(n);
     this->BoardObj->create();
-    this->BoardObj->show();
-    this->MoveCount = 0;
-    this->MoveHistory = std::vector<MoveDirection>();
-    this->TimeElapsed = 0;
-    this->IsInitialized = true;
+    this->show();
+
+    this->initVariables(n);
 
     return true;
 }
 
+void Game::show() {
+    // wypisanie do konsoli
+}
+
+void Game::initVariables(int n) {
+    this->N = n;
+    this->MoveCount = 0;
+    this->MoveHistory = std::vector<MoveDirection>();
+    this->TimeElapsed = 0;
+    this->IsInitialized = true;
+    this->IsSolved = false;
+}
+
 void Game::tryMove(MoveDirection direction) {
     if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
-    this->BoardObj->tryMoveBlock(direction);
+    this->BoardObj->tryMove(direction);
 }
 
 void Game::algorithmSolve() {
@@ -33,9 +43,8 @@ void Game::algorithmSolve() {
     }
 }
 
-void Game::onBlockMoved(MoveDirection direction) {
+void Game::onBlockMoved() {
     this->MoveCount++;
-    this->MoveHistory.push_back(direction);
 }
 
 void Game::onTimeElapsedChanged() {

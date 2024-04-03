@@ -23,12 +23,7 @@ public:
     QBoard(int n, QWidget* parent = nullptr);
 
     void create() override;
-    /**
-    * @brief Metoda, która pozwala na wyświetlenie planszy.
-    *
-    * @param frame Obiekt klasy QFrame z biblioteki qt, w którym zostanie wyświetlona plansza.
-    */
-    void show(QFrame &frame);
+    bool tryMove(MoveDirection direction) override;
 
 signals:
     /**
@@ -38,13 +33,12 @@ signals:
     /**
     * @brief Sygnał, informujący o wykonaniu ruchu.
     */
-    void blockMoved(MoveDirection direction);
+    void blockMoved();
 
 private slots:
     void onBlockClicked();
 
 private:
-    void moveBlock(Block* block) override;
     void moveBlockWidget(Block* block);
 };
 

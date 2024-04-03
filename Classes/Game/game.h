@@ -25,6 +25,7 @@ public:
     *
     *
     * @param n Bok układanki.
+    *
     * @return Wartość true jeśli pomyślnie zainicjalizowano nową układankę, w przeciwnym wypadku - wartość false.
     */
     virtual bool init(int n);
@@ -37,7 +38,7 @@ public:
     *
     * @param direction Wartość enum, która wskazuje na kierunek w jakim chcemy przesunąć klocek.
     */
-    void tryMove(MoveDirection direction);
+    virtual void tryMove(MoveDirection direction);
     /**
     * @brief Zwraca długość boku układanki n x n.
     *
@@ -54,6 +55,10 @@ protected:
     * @brief Wartość bool wskazująca na to, czy układanka została zainicjalizowana.
     */
     bool IsInitialized;
+    /**
+    * @brief Informacja o tym, czy układanka została rozwiązana.
+    */
+    bool IsSolved;
     /**
     * @brief Obiekt planszy.
     */
@@ -72,9 +77,17 @@ protected:
     std::vector<MoveDirection> MoveHistory;
 
     /**
+    * @brief Metoda, inicjalizujące wszystkie zmienne.
+    */
+    void initVariables(int n);
+    /**
+    * @brief Metoda, która pozwala na wyświetlenie planszy.
+    */
+    virtual void show();
+    /**
     * @brief Metoda, która aktualizuje licznik ruchów.
     */
-    virtual void onBlockMoved(MoveDirection direction);
+    virtual void onBlockMoved();
     /**
     * @brief Metoda, która aktualizuje licznik czasu.
     */

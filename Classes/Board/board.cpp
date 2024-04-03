@@ -2,6 +2,7 @@
 
 Board::Board(int n) {
     this->N = n;
+    this->MoveHistory = nullptr;
     this->IsSolved = false;
 }
 
@@ -27,25 +28,11 @@ void Board::create() {
     }
 }
 
-bool Board::tryMoveBlock(Block* block){
-    if(!this->isBlockMovable(block)) return false;
-
-    this->moveBlock(block);
-    return true;
-}
-
-bool Board::tryMoveBlock(MoveDirection direction) {
+bool Board::tryMove(MoveDirection direction) {
     if(!this->isBlockMovable(direction)) return false;
 
-    Block* block = findBlockByPosition(this->getPositionToMove(direction));
-    if(block == nullptr) return false;
-
-    this->moveBlock(block);
+    this->move(direction);
     return true;
-}
-
-void Board::show() {
-    // wypisanie do konsoli
 }
 
 Block* Board::findBlockByPosition(std::tuple<int, int> position) {
@@ -58,10 +45,12 @@ Block* Board::findBlockByPosition(std::tuple<int, int> position) {
 }
 
 bool Board::isBoardSolved() {
+    if(this->IsSolved) return true;
     for(Block *block : this->Blocks)
     {
         if(!(block->isPlacedCorrectly(this->N))) return false;
     }
+    this->IsSolved = true;
     return true;
 }
 
@@ -91,10 +80,26 @@ std::tuple<int, int> Board::getPositionToMove(MoveDirection direction) {
     return std::tuple<int, int>(-1, -1);
 }
 
-void Board::moveBlock(Block *block) {
+MoveDirection Board::getDirectionToMove(Block* block){
+    std::tuple<int, int> position = block->getPosition();
+    if(get<0>(position) == get<0>(this->EmptyPosition) && get<1>(position) == get<1>(this->EmptyPosition) + 1) return MoveDirection::Left;
+    if(get<0>(position) == get<0>(this->EmptyPosition) && get<1>(position) == get<1>(this->EmptyPosition) - 1) return MoveDirection::Right;
+    if(get<0>(position) == get<0>(this->EmptyPosition) + 1 && get<1>(position) == get<1>(this->EmptyPosition)) return MoveDirection::Up;
+    if(get<0>(position) == get<0>(this->EmptyPosition) - 1 && get<1>(position) == get<1>(this->EmptyPosition)) return MoveDirection::Down;
+    return MoveDirection::Down;
+}
+
+void Board::move(MoveDirection direction) {
+    if(this->MoveHistory != nullptr) this->MoveHistory->push_back(direction);
+    Block* block = this->findBlockByPosition(this->getPositionToMove(direction));
     std::tuple<int, int> tmpPosition = block->getPosition();
     block->setPosition(EmptyPosition);
-    this->EmptyPosition= tmpPosition;
+    this->EmptyPosition = tmpPosition;
+    this->isBoardSolved();
+}
+
+void Board::bindMoveHistory(std::vector<MoveDirection> *moveHistory) {
+    this->MoveHistory = moveHistory;
 }
 
 std::vector<MoveDirection> Board::algorithmSolve() {

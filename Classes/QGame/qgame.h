@@ -27,6 +27,8 @@ public:
 
     bool init(int n) override;
     void algorithmSolve() override;
+    void show() override;
+    void tryMove(MoveDirection direction) override;
 
 signals:
     /**
@@ -48,6 +50,7 @@ signals:
     */
     void timeElapsedChanged(int time);
 
+
 private slots:
     void onTimeElapsedChanged() override;
 
@@ -55,7 +58,7 @@ private:
     QFrame* Frame;
     QTimer* Timer;
 
-    void onBlockMoved(MoveDirection direction) override;
+    void onBlockMoved() override;
     void onBoardSolved();
     bool clearLayout();
 };

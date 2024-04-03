@@ -33,25 +33,13 @@ public:
     */
     virtual void create();
     /**
-    * @brief Metoda, która pozwala na wyświetlenie planszy.
-    */
-    virtual void show();
-    /**
-    * @brief Wykonuje próbę ruchu klocka w zadanym kierunku.
-    *
-    * @param block Klocek, którego pozycja ma zostać zmieniona.
-    *
-    * @return Zwraca true jeśli klocek został przemieszczony pomyślnie, w przeciwnym przypadku - false.
-    */
-    bool tryMoveBlock(Block* block);
-    /**
     * @brief Wykonuje próbę ruchu klocka w zadanym kierunku.
     *
     * @param direction Wartość enum, która wskazuje na kierunek w jakim ma zostać przesunięty klocek.
     *
     * @return Zwraca true jeśli klocek został przemieszczony pomyślnie, w przeciwnym przypadku - false.
     */
-    bool tryMoveBlock(MoveDirection direction);
+    virtual bool tryMove(MoveDirection direction);
     /**
     * @brief Wykonuje algorytm automatycznego rozwiązania układanki.
     *
@@ -64,6 +52,8 @@ public:
     * @return Wartość bool gdzie: true - jeśli układanka została rozwiązana lub false w przeciwnym przypadku.
     */
     bool getIsSolved();
+
+    void bindMoveHistory(std::vector<MoveDirection> *moveHistory);
 
 protected:
     /**
@@ -82,6 +72,8 @@ protected:
     * @brief Kontener trzymający wszystkie obiekty klasy Block, które znajdują się na planszy.
     */
     std::vector<Block*> Blocks;
+
+    std::vector<MoveDirection> *MoveHistory;
 
     /**
     * @brief Metoda zwracająca klocek znajdujący się w podanym miejscu na planszy.
@@ -123,14 +115,8 @@ protected:
     * @return Pozycja klocka, który należy przesunąć.
     */
     std::tuple<int, int> getPositionToMove(MoveDirection direction);
-    /**
-    * @brief Metoda zmieniająca pozycję klocka.
-    *
-    * Metoda, która służy do poruszenia klockiem na planszy. Zmienia pozycję klocka, wartość \ref EmptyPosition oraz inkrementuje licznik ruchów.
-    *
-    * @param block Klocek, który zostanie przesunięty.
-    */
-    virtual void moveBlock(Block* block);
+    MoveDirection getDirectionToMove(Block* block);
+    void move(MoveDirection direction);
 };
 
 #endif // BOARD_H
