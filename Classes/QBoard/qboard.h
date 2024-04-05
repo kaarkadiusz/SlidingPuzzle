@@ -10,7 +10,7 @@
  * @class QBoard
  * @brief Rozszerzenie graficzne klasy \ref Board.
  */
-class QBoard : public QGridLayout, public Board{
+class QBoard : public QWidget, public Board{
     Q_OBJECT
 
 public:
@@ -40,6 +40,7 @@ private slots:
 
 private:
     void moveBlockWidget(Block* block);
+    QGridLayout *Layout;
 };
 
 #endif // QBOARD_H

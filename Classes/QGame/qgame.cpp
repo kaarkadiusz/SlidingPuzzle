@@ -1,14 +1,13 @@
 #include "qgame.h"
 
-QGame::QGame(QFrame* frame) {
-    this->Frame = frame;
+QGame::QGame() {
     this->IsInitialized = false;
 }
 
 bool QGame::init(int n) {
-    if(!this->clearLayout()) return false;
+    // if(!this->clearLayout()) return false;
 
-    QBoard* newBoard = new QBoard(n, this->Frame);
+    QBoard* newBoard = new QBoard(n);
     connect(newBoard, &QBoard::solved, this, &QGame::onBoardSolved);
     connect(newBoard, &QBoard::blockMoved, this, &QGame::onBlockMoved);
     newBoard->create();
@@ -30,7 +29,6 @@ bool QGame::init(int n) {
 
     this->initVariables(n);
     this->BoardObj->bindMoveHistory(&this->MoveHistory);
-    this->show();
     return true;
 }
 
@@ -38,8 +36,9 @@ void QGame::onBoardSolved() {
     if(this->IsSolved) return;
     this->Timer->stop();
     this->IsSolved = true;
-    PromptDialog *dialog = new PromptDialog(this->Frame);
-    dialog->exec();
+    emit this->moveCountChanged(this->MoveCount);
+    emit this->moveHistoryChanged(this->MoveHistory);
+    emit this->gameSolved();
 }
 
 void QGame::onBlockMoved() {
@@ -51,27 +50,6 @@ void QGame::onBlockMoved() {
 void QGame::onTimeElapsedChanged() {
     Game::onTimeElapsedChanged();
     emit this->timeElapsedChanged(this->TimeElapsed);
-}
-
-bool QGame::clearLayout() {
-    QLayout* existingLayout = this->Frame->layout();
-    if(existingLayout)
-    {
-        if(!this->BoardObj->getIsSolved())
-        {
-            YesNoDialog *dialog = new YesNoDialog(this->Frame);
-            if(dialog->exec() != 1) return false;
-        }
-        QLayoutItem* item;
-        QWidget* widget;
-        while ((item = existingLayout->takeAt(0))) {
-            if ((widget = item->widget()) != nullptr) {
-                delete widget;
-            }
-        }
-        delete existingLayout;
-    }
-    return true;
 }
 
 void QGame::tryMove(MoveDirection direction) {
@@ -90,9 +68,19 @@ void QGame::algorithmSolve() {
     }
 }
 
-void QGame::show() {
+void QGame::show(QLayout* layout) {
     QBoard* board = dynamic_cast<QBoard*>(this->BoardObj);
-    this->Frame->setLayout(board);
+    emit this->moveCountChanged(this->MoveCount);
+    emit this->moveHistoryChanged(this->MoveHistory);
+    emit this->timeElapsedChanged(this->TimeElapsed);
+    layout->addWidget(board);
+    this->resumeTimer();
 }
 
+void QGame::pauseTimer() {
+    if(this->Timer != nullptr) this->Timer->stop();
+}
 
+void QGame::resumeTimer() {
+    if(this->Timer != nullptr && !this->IsSolved) this->Timer->start(1000);
+}

@@ -23,12 +23,14 @@ public:
     *
     * @param frame Obiekt QFrame z biblioteki qt, w którym będzię rysowana układanka.
     */
-    QGame(QFrame* frame);
+    QGame();
 
     bool init(int n) override;
     void algorithmSolve() override;
-    void show() override;
+    void show(QLayout* layout);
     void tryMove(MoveDirection direction) override;
+    void pauseTimer();
+    void resumeTimer();
 
 signals:
     /**
@@ -50,12 +52,13 @@ signals:
     */
     void timeElapsedChanged(int time);
 
+    void gameSolved();
+
 
 private slots:
     void onTimeElapsedChanged() override;
 
 private:
-    QFrame* Frame;
     QTimer* Timer;
 
     void onBlockMoved() override;

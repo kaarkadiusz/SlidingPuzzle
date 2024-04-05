@@ -4,6 +4,10 @@ Game::Game(){
     this->BoardObj = nullptr;
 }
 
+Game::~Game() {
+
+}
+
 bool Game::init(int n) {
     this->BoardObj = new Board(n);
     this->BoardObj->create();
@@ -53,4 +57,8 @@ void Game::onTimeElapsedChanged() {
 
 int Game::getN() {
     return this->N;
+}
+
+bool Game::getIsSolved() {
+    return this->IsSolved;
 }

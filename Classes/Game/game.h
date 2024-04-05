@@ -20,6 +20,8 @@ public:
     */
     Game();
 
+    virtual ~Game();
+
     /**
     * @brief Inicjalizuje układankę o rozmiarze n x n.
     *
@@ -45,6 +47,7 @@ public:
     * @return Długość boku układanki.
     */
     int getN();
+    bool getIsSolved();
 
 protected:
     /**

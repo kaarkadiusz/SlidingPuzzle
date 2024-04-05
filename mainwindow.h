@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include "Classes/Helpers/helpers.h"
+#include "Classes/player.h"
+#include <QListWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,9 +31,16 @@ private slots:
     void moveHistoryChanged(std::vector<MoveDirection> moveHistory);
     void moveCountChanged(int count);
     void elapsedTimeChanged(int time);
+    void switchGame(QListWidgetItem *item);
+    void onCurrentGameSolved();
 
 private:
-    QGame* SlidingPuzzle;
+    QGame* CurrentGame;
     Ui::MainWindow *ui;
+    QBoxLayout *Layout;
+    Player *Player;
+
+    void clearFrame();
+    void setupGameList();
 };
 #endif // MAINWINDOW_H

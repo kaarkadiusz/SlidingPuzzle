@@ -1,8 +1,11 @@
 #include "qboard.h"
 
-QBoard::QBoard(int n, QWidget* parent) : Board(n), QGridLayout(parent) {
-    this->setVerticalSpacing(5);
-    this->setHorizontalSpacing(5);
+QBoard::QBoard(int n, QWidget* parent) : Board(n), QWidget(parent) {
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    this->Layout = new QGridLayout();
+    this->Layout->setVerticalSpacing(5);
+    this->Layout->setHorizontalSpacing(5);
+    this->setLayout(this->Layout);
 }
 
 void QBoard::create() {
@@ -21,14 +24,14 @@ void QBoard::create() {
         QBlock* block = new QBlock(val, position, nullptr);
         connect(block, &QBlock::clicked, this, &QBoard::onBlockClicked);
         this->Blocks.push_back(block);
-        this->addWidget(block, get<0>(position), get<1>(position));
+        this->Layout->addWidget(block, get<0>(position), get<1>(position));
     }
 }
 
 void QBoard::moveBlockWidget(Block* block) {
     QBlock *qblock = dynamic_cast<QBlock*>(block);
-    this->removeWidget(qblock);
-    this->addWidget(qblock, get<0>(block->getPosition()), get<1>(block->getPosition()));
+    this->Layout->removeWidget(qblock);
+    this->Layout->addWidget(qblock, get<0>(block->getPosition()), get<1>(block->getPosition()));
     if(this->IsSolved) {
         emit this->solved();
     }

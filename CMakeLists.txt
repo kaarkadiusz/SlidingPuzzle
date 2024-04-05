@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         enums.h
         Classes/AStar/astar.h Classes/AStar/astar.cpp
         Classes/Helpers/helpers.h Classes/Helpers/helpers.cpp
+        Classes/player.h Classes/player.cpp
 
 
 
