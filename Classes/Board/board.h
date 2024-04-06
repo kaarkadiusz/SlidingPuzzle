@@ -8,6 +8,7 @@
 #include "../../enums.h"
 #include "../BoardGenerator/boardgenerator.h"
 #include "../AStar/astar.h"
+#include "../BFS/bfs.h"
 
 
 /**

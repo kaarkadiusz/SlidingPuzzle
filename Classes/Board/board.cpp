@@ -103,7 +103,8 @@ void Board::bindMoveHistory(std::vector<MoveDirection> *moveHistory) {
 }
 
 std::vector<MoveDirection> Board::algorithmSolve() {
-    return AStar::solve(this->Blocks);
+    // return AStar::solve(this->Blocks);
+    return BFS::solve(this->Blocks);
 }
 
 bool Board::getIsSolved(){

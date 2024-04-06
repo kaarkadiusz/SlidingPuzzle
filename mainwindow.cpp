@@ -55,7 +55,7 @@ void MainWindow::onCurrentGameSolved() {
 
 void MainWindow::on_solveButton_clicked()
 {
-    if(this->CurrentGame->getN() != 3) return;
+    // if(this->CurrentGame->getN() != 3) return;
     this->CurrentGame->algorithmSolve();
 }
 

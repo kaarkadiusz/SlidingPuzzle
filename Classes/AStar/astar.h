@@ -4,27 +4,28 @@
 #include <vector>
 #include "../Block/block.h"
 #include "../../enums.h"
-
-struct PuzzleState {
-    std::vector<std::vector<int>> board;
-    int cost;
-    int heuristic;
-    std::vector<MoveDirection> moves;
-
-    PuzzleState(std::vector<std::vector<int>> b, int c, int h, std::vector<MoveDirection> m) : board(b), cost(c), heuristic(h), moves(m) {}
-
-    bool operator<(const PuzzleState &other) const {
-        return cost + heuristic > other.cost + other.heuristic;
-    }
-};
-
+#include "../../Bases/algorithmsolvebase.h"
 
 /**
  * @class AStar
  * @brief Klasa, która służy do automatycznego rozwiązania planszy.
  */
-class AStar
+class AStar : AlgorithmSolveBase
 {
+    struct PuzzleState {
+        std::vector<std::vector<int>> board;
+        int cost;
+        int heuristic;
+        std::vector<MoveDirection> moves;
+
+        PuzzleState(std::vector<std::vector<int>> b, int c, int h, std::vector<MoveDirection> m)
+            : board(b), cost(c), heuristic(h), moves(m) {}
+
+        bool operator<(const PuzzleState &other) const {
+            return cost + heuristic > other.cost + other.heuristic;
+        }
+    };
+
 public:
     /**
     * @brief Wykorzystuje algorytm A* do znalezienia optymalnego rozwiązania układanki.
@@ -37,7 +38,6 @@ public:
 
 private:
     static int calculateHeuristic(const std::vector<std::vector<int>> &board);
-    static bool isGoalState(const std::vector<std::vector<int>> &board);
     static std::vector<PuzzleState> getNextStates(const PuzzleState &currentState);
     static std::vector<MoveDirection> solvePuzzle(const std::vector<std::vector<int>> &initialState);
 };

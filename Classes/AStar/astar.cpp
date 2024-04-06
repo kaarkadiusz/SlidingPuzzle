@@ -20,23 +20,7 @@ int AStar::calculateHeuristic(const std::vector<std::vector<int>> &board) {
     return heuristic;
 }
 
-bool AStar::isGoalState(const std::vector<std::vector<int>> &board) {
-    int n = board.size();
-    int expectedValue = 1;
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            if (i == n - 1 && j == n - 1) {
-                if (board[i][j] != 0) return false;
-            } else {
-                if (board[i][j] != expectedValue) return false;
-                expectedValue++;
-            }
-        }
-    }
-    return true;
-}
-
-std::vector<PuzzleState> AStar::getNextStates(const PuzzleState &currentState) {
+std::vector<AStar::PuzzleState> AStar::getNextStates(const PuzzleState &currentState) {
     std::vector<PuzzleState> nextStates;
     int n = currentState.board.size();
     int dx[] = {0, 0, 1, -1};
@@ -99,20 +83,6 @@ std::vector<MoveDirection> AStar::solvePuzzle(const std::vector<std::vector<int>
 }
 
 std::vector<MoveDirection> AStar::solve(std::vector<Block*> blocks) {
-    int n = std::sqrt(blocks.size() + 1);
-    std::vector<std::vector<int>> converted;
-    for(int r = 0; r < n; r ++)
-    {
-        std::vector<int> row;
-        for(int c = 0; c < n; c++)
-        {
-            row.push_back(0);
-        }
-        converted.push_back(row);
-    }
-    for(Block* block : blocks) {
-        std::tuple<int, int> position = block->getPosition();
-        converted[std::get<0>(position)][std::get<1>(position)] = block->getValue();
-    }
+    std::vector<std::vector<int>> converted = convertTo2D(blocks);
     return solvePuzzle(converted);
 }
