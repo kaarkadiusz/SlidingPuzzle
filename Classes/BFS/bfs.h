@@ -7,6 +7,10 @@
 #include "../../enums.h"
 #include "../../Bases/algorithmsolvebase.h"
 
+/**
+ * @class BFS
+ * @brief Klasa, która służy do automatycznego rozwiązania planszy. Wykorzystuje algorytm BFS.
+ */
 class BFS : AlgorithmSolveBase
 {
     struct PuzzleState {
@@ -23,6 +27,13 @@ class BFS : AlgorithmSolveBase
     };
 
 public:
+    /**
+    * @brief Wykorzystuje algorytm BFS do znalezienia optymalnego rozwiązania układanki.
+    *
+    * @param blocks Kontener klocków. Reprezentacja planszy jako kontener obiektów klasy Block.
+    *
+    * @return Kontener zapełniony wartościami enum, których wykonanie w ustalonej sekwencji (od początku do końca kontenera) prowadzi do rozwiązania układanki.
+    */
     static std::vector<MoveDirection> solve(std::vector<Block*> blocks);
 
 private:

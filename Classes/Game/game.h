@@ -47,6 +47,11 @@ public:
     * @return Długość boku układanki.
     */
     int getN();
+    /**
+    * @brief Zwraca informację, czy układanka została rozwiązana.
+    *
+    * @return Wartość true jeśli układanka została rozwiązana, w przeciwnym wypadku - wartość false.
+    */
     bool getIsSolved();
 
 protected:

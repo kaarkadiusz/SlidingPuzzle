@@ -53,7 +53,10 @@ public:
     * @return Wartość bool gdzie: true - jeśli układanka została rozwiązana lub false w przeciwnym przypadku.
     */
     bool getIsSolved();
-
+    /**
+    * @brief Metoda pozwalająca na powiązanie listy ruchów dla klas na zewnątrz.
+    * Powiązany kontener będzie sukcesywnie zapełniany kolejnymi ruchami wykonywanymi podczas gry.
+    */
     void bindMoveHistory(std::vector<MoveDirection> *moveHistory);
 
 protected:
@@ -73,7 +76,9 @@ protected:
     * @brief Kontener trzymający wszystkie obiekty klasy Block, które znajdują się na planszy.
     */
     std::vector<Block*> Blocks;
-
+    /**
+    * @brief Kontener trzymający ruchy wykonane podczas gry.
+    */
     std::vector<MoveDirection> *MoveHistory;
 
     /**
@@ -116,7 +121,19 @@ protected:
     * @return Pozycja klocka, który należy przesunąć.
     */
     std::tuple<int, int> getPositionToMove(MoveDirection direction);
+    /**
+    * @brief Metoda wyliczająca kierunek w jakim trzeba przesunąć klocek.
+    *
+    * @param block Klocek, który chcemy przesunąć.
+    *
+    * @return Kierunek, w którym można przesunąć klocek.
+    */
     MoveDirection getDirectionToMove(Block* block);
+    /**
+    * @brief Metoda wykonująca ruch.
+    *
+    * @param direction Kierunek, w którym chcemy wykonać ruch.
+    */
     void move(MoveDirection direction);
 };
 

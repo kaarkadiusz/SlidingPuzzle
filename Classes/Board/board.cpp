@@ -86,7 +86,7 @@ MoveDirection Board::getDirectionToMove(Block* block){
     if(get<0>(position) == get<0>(this->EmptyPosition) && get<1>(position) == get<1>(this->EmptyPosition) - 1) return MoveDirection::Right;
     if(get<0>(position) == get<0>(this->EmptyPosition) + 1 && get<1>(position) == get<1>(this->EmptyPosition)) return MoveDirection::Up;
     if(get<0>(position) == get<0>(this->EmptyPosition) - 1 && get<1>(position) == get<1>(this->EmptyPosition)) return MoveDirection::Down;
-    return MoveDirection::Down;
+    throw std::invalid_argument("Provided block is not movable");;
 }
 
 void Board::move(MoveDirection direction) {

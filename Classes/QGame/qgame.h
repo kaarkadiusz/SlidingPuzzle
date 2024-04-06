@@ -27,9 +27,20 @@ public:
 
     bool init(int n) override;
     void algorithmSolve() override;
-    void show(QLayout* layout);
     void tryMove(MoveDirection direction) override;
+    /**
+    * @brief Dodaje planszę jako QWidget w podanym obiekcie QLayout.
+    *
+    * @param layout Obiekt QLayout, w którym ma zostać dodany QWidget.
+    */
+    void show(QLayout* layout);
+    /**
+    * @brief Wstrzymuje stoper, który liczy czas gry.
+    */
     void pauseTimer();
+    /**
+    * @brief Wznawia stoper, który liczy czas gry.
+    */
     void resumeTimer();
 
 signals:
@@ -51,7 +62,9 @@ signals:
     * @param time Aktualny czas wyrażony w sekundach.
     */
     void timeElapsedChanged(int time);
-
+    /**
+    * @brief Sygnał, wysyłany gdy układanka zostanie ułożona.
+    */
     void gameSolved();
 
 

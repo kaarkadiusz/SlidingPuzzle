@@ -8,7 +8,7 @@
 
 /**
  * @class AStar
- * @brief Klasa, która służy do automatycznego rozwiązania planszy.
+ * @brief Klasa, która służy do automatycznego rozwiązania planszy. Wykorzystuje algorytm AStar.
  */
 class AStar : AlgorithmSolveBase
 {
