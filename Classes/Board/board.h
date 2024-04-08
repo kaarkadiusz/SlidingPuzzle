@@ -46,7 +46,7 @@ public:
     *
     * @return Kontener zapełniony wartościami enum, których wykonanie w ustalonej sekwencji (od początku do końca kontenera) prowadzi do rozwiązania układanki.
     */
-    std::vector<MoveDirection> algorithmSolve();
+    std::vector<MoveDirection> algorithmSolve(SolvingAlgorithmName algorithm);
     /**
     * @brief Zwraca informację o tym, czy układanka została rozwiązana.
     *

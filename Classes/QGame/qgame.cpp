@@ -52,15 +52,27 @@ void QGame::onTimeElapsedChanged() {
     emit this->timeElapsedChanged(this->TimeElapsed);
 }
 
-void QGame::tryMove(MoveDirection direction) {
+bool QGame::tryMove(MoveDirection direction) {
     QBoard* board = dynamic_cast<QBoard*>(this->BoardObj);
-    if(board->tryMove(direction)) emit this->moveHistoryChanged(this->MoveHistory);
+    if(board->tryMove(direction)){
+        emit this->moveHistoryChanged(this->MoveHistory);
+        return true;
+    }
+    else return false;
 }
 
 void QGame::algorithmSolve() {
     if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
-
-    std::vector<MoveDirection> moves = this->BoardObj->algorithmSolve();
+    std::vector<MoveDirection> moves;
+    int choice = AlgorithmChoiceDialog().exec();
+    if(choice == 0)
+    {
+        moves = this->BoardObj->algorithmSolve(SolvingAlgorithmName::BFS);
+    }
+    if(choice == 1)
+    {
+        moves = this->BoardObj->algorithmSolve(SolvingAlgorithmName::AStar);
+    }
 
     for(MoveDirection move : moves) {
         this->tryMove(move);

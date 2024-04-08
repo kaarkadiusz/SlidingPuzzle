@@ -3,7 +3,7 @@
 
 #include <QFrame>
 #include <QTimer>
-#include "../YesNoDialog/yesnodialog.h"
+#include "../AlgorithmChoiceDialog/algorithmchoicedialog.h"
 #include "../PromptDialog/promptdialog.h"
 #include "qlayout.h"
 #include "../Game/game.h"
@@ -27,7 +27,7 @@ public:
 
     bool init(int n) override;
     void algorithmSolve() override;
-    void tryMove(MoveDirection direction) override;
+    bool tryMove(MoveDirection direction) override;
     /**
     * @brief Dodaje planszę jako QWidget w podanym obiekcie QLayout.
     *

@@ -40,7 +40,7 @@ public:
     *
     * @param direction Wartość enum, która wskazuje na kierunek w jakim chcemy przesunąć klocek.
     */
-    virtual void tryMove(MoveDirection direction);
+    virtual bool tryMove(MoveDirection direction);
     /**
     * @brief Zwraca długość boku układanki n x n.
     *

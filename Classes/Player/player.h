@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Game/game.h"
-#include "QGame/qgame.h"
+#include "../Game/game.h"
+#include "../QGame/qgame.h"
 
 
 /**

@@ -31,15 +31,15 @@ void Game::initVariables(int n) {
     this->IsSolved = false;
 }
 
-void Game::tryMove(MoveDirection direction) {
-    if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
-    this->BoardObj->tryMove(direction);
+bool Game::tryMove(MoveDirection direction) {
+    if(!this->IsInitialized || this->BoardObj->getIsSolved()) return false;
+    return this->BoardObj->tryMove(direction);
 }
 
 void Game::algorithmSolve() {
     if(!this->IsInitialized || this->BoardObj->getIsSolved()) return;
 
-    std::vector<MoveDirection> moves = this->BoardObj->algorithmSolve();
+    std::vector<MoveDirection> moves = this->BoardObj->algorithmSolve(SolvingAlgorithmName::AStar);
 
     for(MoveDirection move : moves) {
         this->tryMove(move);

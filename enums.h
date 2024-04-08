@@ -8,5 +8,10 @@ enum MoveDirection {
     Right
 };
 
+enum SolvingAlgorithmName {
+    AStar,
+    BFS
+};
+
 #endif // ENUMS_H
 

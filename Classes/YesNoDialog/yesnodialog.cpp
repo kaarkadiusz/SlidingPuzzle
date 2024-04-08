@@ -7,8 +7,8 @@ YesNoDialog::YesNoDialog(QWidget *parent)
     , ui(new Ui::YesNoDialog)
 {
     ui->setupUi(this);
-    ui->buttonBox->button(QDialogButtonBox::Yes)->setText("Tak");
-    ui->buttonBox->button(QDialogButtonBox::No)->setText("Nie");
+    ui->buttonBox->button(QDialogButtonBox::Yes)->setText("AStar");
+    ui->buttonBox->button(QDialogButtonBox::No)->setText("BFS");
 }
 
 YesNoDialog::~YesNoDialog()

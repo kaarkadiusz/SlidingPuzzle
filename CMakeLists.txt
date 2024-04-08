@@ -36,9 +36,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         enums.h
         Classes/AStar/astar.h Classes/AStar/astar.cpp
         Classes/Helpers/helpers.h Classes/Helpers/helpers.cpp
-        Classes/player.h Classes/player.cpp
+        Classes/Player/player.h Classes/Player/player.cpp
         Classes/BFS/bfs.h Classes/BFS/bfs.cpp
         Bases/algorithmsolvebase.h Bases/algorithmsolvebase.cpp
+        Classes/AlgorithmChoiceDialog/algorithmchoicedialog.h Classes/AlgorithmChoiceDialog/algorithmchoicedialog.cpp Classes/AlgorithmChoiceDialog/algorithmchoicedialog.ui
+
+
 
 
 

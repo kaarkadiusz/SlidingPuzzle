@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include "Classes/Helpers/helpers.h"
-#include "Classes/player.h"
+#include "Classes/Player/player.h"
 #include <QListWidget>
 
 QT_BEGIN_NAMESPACE
